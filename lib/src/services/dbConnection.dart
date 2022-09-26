@@ -56,6 +56,6 @@ class DBConnection {
   }
 
   static String _getConnectionString() {
-    return "mongodb+srv://jgodinez:una@cluster0.tajvs.mongodb.net/Proyect-Development?retryWrites=true&w=majority";
+    return "mongodb+srv://jgodinez:una@cluster0.tajvs.mongodb.net/Dev-Gestion-De-Tickets?retryWrites=true&w=majority";
   }
 }
