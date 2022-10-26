@@ -40,6 +40,11 @@ dependencies:
   encrypt: ^5.0.1
   easy_sidemenu: ^0.4.1
   light_carousel: ^0.0.4
+  flutter_profile_picture: ^2.0.0
+  flutter_smart_dialog: ^4.6.1+5
+  image_picker: ^0.8.5+3
+  permission_handler: ^10.2.0
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:
