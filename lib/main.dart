@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/views/landing/landing.dart';
+import 'package:venta_de_tickets/src/views/movie/movie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Landing(),
+      home: const Movie(),
     );
   }
 }
