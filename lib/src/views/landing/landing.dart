@@ -1,10 +1,9 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
-import 'package:venta_de_tickets/src/views/landing/main.dart';
-import 'package:venta_de_tickets/src/views/payment/payment.dart';
-
-import '../profile/profile.dart';
+import 'package:venta_de_tickets/src/views/landing/home.dart';
+import 'package:venta_de_tickets/src/views/profile/profile.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -20,11 +19,13 @@ class _Landing extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("ds"),
-        centerTitle: true,
-      ),
+    return SafeArea(
+        // minimum: const EdgeInsets.all(0.0),
+        child: Scaffold(
+      // appBar: AppBar(
+      //   title: const Text("Ticket App"),
+      //   centerTitle: true,
+      // ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -36,21 +37,21 @@ class _Landing extends State<Landing> {
                   ? SideMenuDisplayMode.open
                   : SideMenuDisplayMode.compact,
               hoverColor: Colors.blue[100],
-              selectedColor: Colors.blue[600],
+              selectedColor: Colors.blueGrey[900],
               selectedTitleTextStyle: const TextStyle(color: Colors.white),
               selectedIconColor: Colors.white,
               unselectedIconColor: Colors.white70,
               unselectedTitleTextStyle: const TextStyle(color: Colors.white70),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 79, 117, 134),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(0, 0), // changes position of shadow
-                    ),
-                  ]),
+              // decoration: const BoxDecoration(
+              //     borderRadius: BorderRadius.all(Radius.circular(0)),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Color.fromARGB(255, 79, 117, 134),
+              //         spreadRadius: 1,
+              //         blurRadius: 10,
+              //         offset: Offset(0, 0), // changes position of shadow
+              //       ),
+              //     ]),
               backgroundColor: const Color.fromARGB(255, 79, 117, 134),
             ),
             title: Column(
@@ -59,34 +60,35 @@ class _Landing extends State<Landing> {
             items: [
               SideMenuItem(
                 priority: 0,
-                title: 'Cines',
+                title: 'Inicio',
                 onTap: () {
                   page.jumpToPage(0);
+                },
+                icon: const Icon(Icons.home),
+              ),
+              SideMenuItem(
+                priority: 1,
+                title: 'Cines',
+                onTap: () {
+                  page.jumpToPage(1);
                 },
                 icon: const Icon(Icons.video_collection_outlined),
               ),
               SideMenuItem(
-                priority: 1,
+                priority: 2,
                 title: 'Eventos',
                 onTap: () {
-                  page.jumpToPage(1);
+                  page.jumpToPage(2);
                 },
                 icon: const Icon(Icons.date_range),
               ),
               SideMenuItem(
-                  priority: 2,
-                  title: 'Mi Cuenta',
-                  onTap: () {
-                    page.jumpToPage(2);
-                  },
-                  icon: const Icon(Icons.supervisor_account)),
-              SideMenuItem(
                 priority: 3,
-                title: 'Metodos de Pagos',
+                title: 'Mi Cuenta',
                 onTap: () {
                   page.jumpToPage(3);
                 },
-                icon: const Icon(Icons.payment_outlined),
+                icon: const Icon(Icons.supervisor_account),
               ),
               SideMenuItem(
                 priority: 4,
@@ -105,7 +107,7 @@ class _Landing extends State<Landing> {
                 icon: const Icon(Icons.logout),
               ),
               SideMenuItem(
-                priority: 6,
+                priority: 7,
                 title: isOpen ? "Collapsar" : "Abrir",
                 onTap: () {
                   isOpen = !isOpen;
@@ -124,7 +126,24 @@ class _Landing extends State<Landing> {
                 Container(
                   color: Colors.white,
                   child: const Center(
-                    child: Main(),
+                    child: Home(),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: Container(
+                    color: Colors.white,
+                    child: Center(
+                      child: Stack(
+                        children: <Widget>[
+                          Cinemas(),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text('Cinema'),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 Container(
@@ -137,12 +156,6 @@ class _Landing extends State<Landing> {
                   color: Colors.white,
                   child: const Center(
                     child: Profile(),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Payment(),
                   ),
                 ),
                 Container(
@@ -168,6 +181,6 @@ class _Landing extends State<Landing> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

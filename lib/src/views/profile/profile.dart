@@ -5,7 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../widgets/customeditabletext.dart';
+import '../../widgets/CustomEditableText.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {

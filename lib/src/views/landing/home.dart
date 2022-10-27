@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:light_carousel/light_carousel.dart';
 
-class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<Main> createState() => _Main();
+  State<Home> createState() => _Home();
 }
 
-class _Main extends State<Main> {
+class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
