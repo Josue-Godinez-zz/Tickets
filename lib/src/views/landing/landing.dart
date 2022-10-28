@@ -20,12 +20,7 @@ class _Landing extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        // minimum: const EdgeInsets.all(0.0),
         child: Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Ticket App"),
-      //   centerTitle: true,
-      // ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -42,16 +37,6 @@ class _Landing extends State<Landing> {
               selectedIconColor: Colors.white,
               unselectedIconColor: Colors.white70,
               unselectedTitleTextStyle: const TextStyle(color: Colors.white70),
-              // decoration: const BoxDecoration(
-              //     borderRadius: BorderRadius.all(Radius.circular(0)),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Color.fromARGB(255, 79, 117, 134),
-              //         spreadRadius: 1,
-              //         blurRadius: 10,
-              //         offset: Offset(0, 0), // changes position of shadow
-              //       ),
-              //     ]),
               backgroundColor: const Color.fromARGB(255, 79, 117, 134),
             ),
             title: Column(
@@ -135,7 +120,7 @@ class _Landing extends State<Landing> {
                     color: Colors.white,
                     child: Center(
                       child: Stack(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Cinemas(),
                           Align(
                             alignment: Alignment.topCenter,
