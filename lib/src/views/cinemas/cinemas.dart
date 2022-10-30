@@ -5,7 +5,7 @@ class Cinemas extends StatefulWidget {
   const Cinemas({Key? key}) : super(key: key);
 
   @override
-  _CinemasState createState() => _CinemasState();
+  State<Cinemas> createState() => _CinemasState();
 }
 
 class _CinemasState extends State<Cinemas> {
