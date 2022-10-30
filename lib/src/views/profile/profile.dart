@@ -113,7 +113,7 @@ class _Profile extends State<Profile> {
                                   onPressed: () => {openCamara()},
                                 ),
                                 const SizedBox(
-                                  width: 30,
+                                  width: 15,
                                 ),
                                 ElevatedButton(
                                   child: Row(children: const [
@@ -139,7 +139,7 @@ class _Profile extends State<Profile> {
             ],
           ),
         ),
-        const SizedBox(height: 35),
+        const SizedBox(height: 15),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text("Name",
@@ -153,7 +153,7 @@ class _Profile extends State<Profile> {
           field: 'name',
           style: const TextStyle(fontSize: 20),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text("Username ",
@@ -167,7 +167,7 @@ class _Profile extends State<Profile> {
           field: 'username',
           style: const TextStyle(fontSize: 20),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text("Phone",
@@ -181,7 +181,7 @@ class _Profile extends State<Profile> {
           field: 'phone',
           style: const TextStyle(fontSize: 20),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text("Email",
@@ -195,7 +195,7 @@ class _Profile extends State<Profile> {
           field: 'email',
           style: const TextStyle(fontSize: 20),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
       ],
     );
   }

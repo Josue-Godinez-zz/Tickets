@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/widgets/customappbar.dart';
 
 import '../schedule/schedule.dart';
 
