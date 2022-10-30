@@ -26,6 +26,18 @@ class _Landing extends State<Landing> {
       //   title: const Text("Ticket App"),
       //   centerTitle: true,
       // ),
+      drawer: Drawer(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const SizedBox(
+              height: 80,
+            ),
+            const Expanded(child: Text('sdfsadf')),
+          ],
+        ),
+      ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -131,19 +143,8 @@ class _Landing extends State<Landing> {
                 ),
                 Container(
                   color: Colors.white,
-                  child: Container(
-                    color: Colors.white,
-                    child: Center(
-                      child: Stack(
-                        children: <Widget>[
-                          Cinemas(),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Text('Cinema'),
-                          )
-                        ],
-                      ),
-                    ),
+                  child: const Center(
+                    child: Cinemas(),
                   ),
                 ),
                 Container(
