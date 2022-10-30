@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/views/login/login.dart';
 
 void main() {
+  DBConnection.connect();
   runApp(const MyApp());
 }
 

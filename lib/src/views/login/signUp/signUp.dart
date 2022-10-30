@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:venta_de_tickets/src/components/background.dart';
 import 'package:venta_de_tickets/src/components/customLoading.dart';
+import 'package:venta_de_tickets/src/models/userdto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/services/encryptation.dart';
 import 'package:venta_de_tickets/src/views/landing/landing.dart';
@@ -53,7 +54,9 @@ class _SignUpState extends State<SignUp> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const Landing(),
+              builder: (context) => Landing(
+                user: LoginController.getUserDto()!,
+              ),
             ));
       } else {
         SmartDialog.dismiss();
@@ -133,7 +136,39 @@ class _SignUpState extends State<SignUp> {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  SmartDialog.showLoading();
+                  UserDto user = UserDto(
+                      null,
+                      _emailController.text,
+                      _nameController.text,
+                      _passwordController.text,
+                      _phoneController.text,
+                      _usernameController.text,
+                      0);
+                  Future<Map<String, Object>> logUp =
+                      LoginController.signUp(user);
+
+                  logUp.then((value) => {
+                        if (value['status'] as bool)
+                          {
+                            SmartDialog.dismiss(),
+                            Navigator.pop(context),
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Landing(
+                                    user: user,
+                                  ),
+                                ))
+                          }
+                        else
+                          {
+                            SmartDialog.dismiss(),
+                            SmartDialog.showToast(value['reason'] as String)
+                          }
+                      });
+                },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
                 textColor: Colors.white,

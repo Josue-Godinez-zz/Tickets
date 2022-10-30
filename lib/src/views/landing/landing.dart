@@ -1,13 +1,16 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/userdto.dart';
 import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/landing/home.dart';
 import 'package:venta_de_tickets/src/views/profile/profile.dart';
 
+// ignore: must_be_immutable
 class Landing extends StatefulWidget {
+  UserDto user;
   @override
-  const Landing({Key? key}) : super(key: key);
+  Landing({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Landing> createState() => _Landing();

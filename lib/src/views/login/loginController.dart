@@ -15,7 +15,25 @@ class LoginController {
     return _instance;
   }
 
-  static void signUp() {}
+  static Future<Map<String, Object>> signUp(UserDto user) async {
+    try {
+      await DBConnection.selectCollection('user');
+      await DBConnection.insertData({
+        'name': user.name!,
+        'username': user.username!,
+        'email': user.password!,
+        'password': Encryptation.encrypt(user.password!),
+        'phone': user.phone!,
+        'photo': '',
+      });
+      return {'status': true, 'reason': ''};
+    } catch (e) {
+      return {
+        'status': false,
+        'reason': 'Ocurrio un error al registrar nuevo usuario'
+      };
+    }
+  }
 
   static Future<Map<String, Object>> signIn(
       String username, String password) async {

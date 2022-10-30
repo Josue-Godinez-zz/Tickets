@@ -115,7 +115,9 @@ class _SignInState extends State<SignIn> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Landing(),
+                                  builder: (context) => Landing(
+                                    user: LoginController.getUserDto()!,
+                                  ),
                                 ));
                           } else {
                             SmartDialog.dismiss();

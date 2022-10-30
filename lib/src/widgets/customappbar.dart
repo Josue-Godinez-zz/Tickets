@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:venta_de_tickets/main.dart';
+
 import 'package:venta_de_tickets/src/views/cinemas/cinema.dart';
 import 'package:venta_de_tickets/src/views/landing/landing.dart';
-import 'package:venta_de_tickets/src/views/movie/movie.dart';
+import 'package:venta_de_tickets/src/views/login/loginController.dart';
 
 // ignore: must_be_immutable
 class CustomAppBar extends StatefulWidget {
@@ -27,20 +27,38 @@ class _CustomAppBar extends State<CustomAppBar> {
               Navigator.pop(context);
               switch (widget.returnArea) {
                 case Areas.landing:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Landing()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Landing(user: LoginController.getUserDto()!)));
                   break;
                 case Areas.cinema:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Cinema()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Cinema(
+                                title: '',
+                                urlImage: '',
+                              )));
                   break;
                 case Areas.schedule:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Cinema()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Cinema(
+                                title: '',
+                                urlImage: '',
+                              )));
                   break;
                 case Areas.movie:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Movie()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Cinema(
+                                title: '',
+                                urlImage: '',
+                              )));
                   break;
               }
             },
