@@ -4,6 +4,7 @@ class DBConnection {
   static final DBConnection _instance = DBConnection._instance;
   static Db? _db;
   static DbCollection? _userCollection;
+  static var _cinemasCollection;
 
   factory DBConnection() {
     return _instance;
@@ -15,7 +16,10 @@ class DBConnection {
 
   static connect() async {
     _db = await Db.create(_getConnectionString());
-    await _db!.open();
+    if (!isConnected()) {
+      await _db!.open();
+      _cinemasCollection = _db?.collection('Cinemas');
+    }
   }
 
   static closeConnection() {
@@ -53,6 +57,12 @@ class DBConnection {
 
   static deleteData(Map<String, Object> data) {
     _userCollection!.deleteMany(data);
+  }
+
+  /// Return a list of cinemas
+  static Future<List<Map<String, dynamic>>> getCinemas() async {
+    final array = await _cinemasCollection.find().toList();
+    return array;
   }
 
   static String _getConnectionString() {
