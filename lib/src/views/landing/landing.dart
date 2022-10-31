@@ -1,10 +1,12 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/models/userdto.dart';
+import 'package:venta_de_tickets/src/views/booking/booking_screen.dart';
 import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/landing/home.dart';
 import 'package:venta_de_tickets/src/views/profile/profile.dart';
+import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
 class Landing extends StatefulWidget {
@@ -19,6 +21,17 @@ class Landing extends StatefulWidget {
 class _Landing extends State<Landing> {
   PageController page = PageController();
   bool isOpen = false;
+  late VideoPlayerController _moviePlayerController;
+  late VideoPlayerController _reflectionPlayerController;
+
+  @override
+  void initState() {
+    super.initState();
+    _moviePlayerController =
+        VideoPlayerController.asset("assets/video/mulanclip.mp4")..initialize();
+    _reflectionPlayerController =
+        VideoPlayerController.asset("assets/video/mulanclip.mp4")..initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,11 +177,11 @@ class _Landing extends State<Landing> {
                 ),
                 Container(
                   color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Settings',
-                      style: TextStyle(fontSize: 35),
-                    ),
+                  child: Center(
+                    child: BookingScreen(
+                        moviePlayerController: _moviePlayerController,
+                        reflectionPlayerController: _reflectionPlayerController,
+                        movieName: "TEST"),
                   ),
                 ),
                 Container(
