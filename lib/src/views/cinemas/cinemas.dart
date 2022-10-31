@@ -12,7 +12,6 @@ class _CinemasState extends State<Cinemas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Cinema")),
       body: GridView.builder(
         shrinkWrap: true,
         gridDelegate:

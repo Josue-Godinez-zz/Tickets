@@ -1,7 +1,9 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/components/lateralMenu.dart';
 import 'package:venta_de_tickets/src/models/userdto.dart';
 import 'package:venta_de_tickets/src/views/booking/booking_screen.dart';
+import 'package:venta_de_tickets/src/util/extentions.dart';
 import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/landing/home.dart';
@@ -11,6 +13,7 @@ import 'package:video_player/video_player.dart';
 // ignore: must_be_immutable
 class Landing extends StatefulWidget {
   UserDto user;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Landing({Key? key, required this.user}) : super(key: key);
 
@@ -38,19 +41,40 @@ class _Landing extends State<Landing> {
     return SafeArea(
         // minimum: const EdgeInsets.all(0.0),
         child: Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Ticket App"),
-      //   centerTitle: true,
-      // ),
+      key: widget._scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text("Ticket +"),
+        centerTitle: true,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(
+                Icons.menu_rounded,
+                color: Theme.of(context).secondaryHeaderColor,
+                size: 30,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
+      ),
       drawer: Drawer(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: '#ffffff'.toColor(),
         child: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            const SizedBox(
+            // ignore: prefer_const_constructors
+            SizedBox(
               height: 80,
             ),
-            const Expanded(child: Text('sdfsadf')),
+            // ignore: prefer_const_constructors
+            Expanded(
+                // ignore: prefer_const_constructors
+                child: lateralMenu()),
           ],
         ),
       ),

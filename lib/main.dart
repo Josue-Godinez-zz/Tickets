@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/views/login/login.dart';
+import 'src/util/extentions.dart';
 
 void main() {
   DBConnection.connect();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       builder: FlutterSmartDialog.init(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: '#2B3B49'.toColor(),
       ),
       home: const Login(),
     );
