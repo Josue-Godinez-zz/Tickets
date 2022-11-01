@@ -24,7 +24,7 @@ class _lateralMenuState extends State<lateralMenu> {
     // ignore: avoid_unnecessary_containers
     return Column(
       children: [
-        userHeader(),
+        const UserHeader(),
         Divider(
           height: 20,
           thickness: 2,
@@ -50,7 +50,7 @@ class _lateralMenuState extends State<lateralMenu> {
               size: 20,
             ), () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Event()));
+              context, MaterialPageRoute(builder: (context) => const Event()));
         }),
         item(
             "Mi cuenta",
@@ -59,8 +59,8 @@ class _lateralMenuState extends State<lateralMenu> {
               color: Theme.of(context).primaryColor,
               size: 20,
             ), () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Profile()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Profile()));
         }),
         item(
             "Cerrar Sesión",
@@ -70,38 +70,36 @@ class _lateralMenuState extends State<lateralMenu> {
               size: 20,
             ), () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login()));
+              context, MaterialPageRoute(builder: (context) => const Login()));
         }),
       ],
     );
   }
 
-  Widget item(title, icon, onPress) => Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>('#ffffff'.toColor())),
-            // ignore: sort_child_properties_last
-            child: Row(
-              children: [
-                icon!,
-                SizedBox(
-                  width: 10,
+  Widget item(title, icon, onPress) => Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>('#ffffff'.toColor())),
+          // ignore: sort_child_properties_last
+          child: Row(
+            children: [
+              icon!,
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                title!,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
                 ),
-                Text(
-                  title!,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                )
-              ],
-            ),
-            onPressed: onPress,
+              )
+            ],
           ),
+          onPressed: onPress,
         ),
       );
 }

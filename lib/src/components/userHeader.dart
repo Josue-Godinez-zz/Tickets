@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import '../util/extentions.dart';
 
-class userHeader extends StatefulWidget {
-  userHeader({Key? key}) : super(key: key);
+class UserHeader extends StatefulWidget {
+  const UserHeader({Key? key}) : super(key: key);
 
   @override
-  State<userHeader> createState() => _userHeaderState();
+  State<UserHeader> createState() => _UserHeaderState();
 }
 
-class _userHeaderState extends State<userHeader> {
+class _UserHeaderState extends State<UserHeader> {
   final image = null;
   bool isImage = false;
   @override
@@ -70,7 +70,6 @@ class _userHeaderState extends State<userHeader> {
                   //     ),
                   //   ),
                   ),
-              // ignore: prefer_const_constructors
               SizedBox(
                 width: 10,
                 height: 0,
