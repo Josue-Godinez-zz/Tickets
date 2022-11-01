@@ -4,23 +4,22 @@ import 'package:venta_de_tickets/src/widgets/videoclipper.dart';
 import 'package:venta_de_tickets/src/widgets/videoclipper2.dart';
 import 'package:video_player/video_player.dart';
 
-class BookingScreen extends StatefulWidget {
+class Booking extends StatefulWidget {
   final VideoPlayerController moviePlayerController;
   final VideoPlayerController reflectionPlayerController;
   final String movieName;
 
-  const BookingScreen(
+  const Booking(
       {super.key,
       required this.moviePlayerController,
       required this.reflectionPlayerController,
       required this.movieName});
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  _BookingState createState() => _BookingState();
 }
 
-class _BookingScreenState extends State<BookingScreen>
-    with TickerProviderStateMixin {
+class _BookingState extends State<Booking> with TickerProviderStateMixin {
   Size get _size => MediaQuery.of(context).size;
   List<AnimationController> _dateSelectorACList = [];
   List<Animation<double>> _dateSelectorTweenList = [];
