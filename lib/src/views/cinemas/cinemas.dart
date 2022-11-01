@@ -210,42 +210,26 @@ class _CinemasState extends State<Cinemas> {
           color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Text(cinema.toString(),
-                  style: TextStyle(
-                      fontSize: 13,
-                      decoration: TextDecoration.none,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold)),
-            ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-            //       child: button("Borrar", () => {sureDeletecinema(cinema)},
-            //           '#C96262'.toColor()),
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
-            //       child: button(
-            //           "Editar",
-            //           () => {
-            //                 Navigator.of(context).push(MaterialPageRoute(
-            //                   builder: (context) => Editcinema(
-            //                     cinema: cinema,
-            //                   ),
-            //                 )),
-            //               },
-            //           '#62C96C'.toColor()),
-            //     ),
-            //   ],
-            // ),
-          ],
+        child: TextButton(
+          onPressed: () => {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Cinema(
+                title: cinema.name,
+                // urlImage: cinema.image,
+                urlImage:
+                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+              ),
+            )),
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Text(cinema.toString(),
+                style: TextStyle(
+                    fontSize: 13,
+                    decoration: TextDecoration.none,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold)),
+          ),
         ),
       );
 }

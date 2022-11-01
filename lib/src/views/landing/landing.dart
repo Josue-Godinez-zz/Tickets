@@ -1,15 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/components/lateralMenu.dart';
 import 'package:venta_de_tickets/src/models/userdto.dart';
-import 'package:venta_de_tickets/src/views/booking/booking_screen.dart';
 import 'package:venta_de_tickets/src/util/extentions.dart';
-import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
-import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/landing/home.dart';
-import 'package:venta_de_tickets/src/views/profile/profile.dart';
 import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
