@@ -89,7 +89,7 @@ class _CinemaState extends State<Cinema> {
                                     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'))); // [TODO] Url imagen del cinema
                   },
                   child: Card(
-                    child: Center(child: Text('Card element $index')),
+                    child: Center(child: Text('Card element - $index')),
                   ),
                 ))); // [TODO] FORMA DE CADA PELICULA
               },

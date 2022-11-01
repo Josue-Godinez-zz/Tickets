@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/views/booking/booking_screen.dart';
+import 'package:video_player/video_player.dart';
 
 class Schedule extends StatefulWidget {
   final String title;
@@ -76,14 +78,18 @@ class _ScheduleState extends State<Schedule> {
                   onPressed: () {
                     // Navigator.pop(context);
 
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const Booking(
-                    //             title:
-                    //                 'Nombre Cinema', // [TODO] Nombre del cinema
-                    //             urlImage:
-                    //                 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'))); // [TODO] Url imagen del cinema
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Booking(
+                                  movieName: 'TEST',
+                                  moviePlayerController:
+                                      VideoPlayerController.asset(
+                                          "assets/video/mulanclip.mp4"),
+                                  reflectionPlayerController:
+                                      VideoPlayerController.asset(
+                                          "assets/video/mulanclip.mp4"),
+                                ))); // [TODO] Url imagen del cinema
                   },
                   child: Card(
                     child: Center(child: Text('Card element $index')),
