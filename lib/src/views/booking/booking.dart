@@ -45,12 +45,12 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   int _dateIndexSelected = 1;
   int _timeIndexSelected = 1;
   final _chairStatus = [
-    [0, 3, 2, 1, 2, 2, 0],
-    [2, 2, 2, 2, 1, 2, 2],
-    [1, 1, 2, 2, 2, 2, 2],
-    [0, 2, 1, 1, 1, 2, 0],
-    [2, 2, 2, 2, 2, 2, 2],
-    [0, 3, 3, 2, 1, 1, 0]
+    [1, 1, 1, 1, 0, 0, 1],
+    [1, 1, 3, 1, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, 1],
+    [1, 1, 1, 2, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1]
   ];
 
   @override
@@ -147,13 +147,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Column(
-          children: <Widget>[
-            _appBar(),
-            _dateSelector(),
-            _timeSelector(),
-            _cinemaRoom(),
-            _payButton()
-          ],
+          children: <Widget>[_appBar(), _cinemaRoom(), _payButton()],
         ),
       ),
     );
@@ -320,7 +314,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                   height: _size.height * .08,
                   child: const Center(
                     child: Text(
-                      'Pay',
+                      'Reservar',
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -411,212 +405,6 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
           ),
       ],
     );
-  }
-
-  Widget _timeSelector() {
-    var time = [
-      ["01.30", 45],
-      ["06.30", 45],
-      ["10.30", 45]
-    ];
-
-    return Expanded(
-      flex: 17,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: _size.height * .035),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (ctx, index) {
-            return AnimatedBuilder(
-              animation: _timeSelectorACList[index],
-              builder: (ctx, child) {
-                return Transform.translate(
-                  offset: Offset(_timeSelectorTweenList[index].value, 0),
-                  child: child,
-                );
-              },
-              child: Container(
-                margin: EdgeInsets.only(left: index == 0 ? 32 : 0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _timeIndexSelected = index;
-                    });
-                  },
-                  child: _timeItem(
-                      time[index][0].toString(),
-                      time[index][1] as int,
-                      index == _timeIndexSelected ? true : false),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _timeItem(String time, int price, bool active) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: active ? AppColor.primary : Colors.white, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RichText(
-            text: TextSpan(
-                text: time,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: active ? AppColor.primary : Colors.white,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: ' PM',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: active ? AppColor.primary : Colors.white,
-                    ),
-                  )
-                ]),
-          ),
-          Text(
-            "IDR ${price}K",
-            style: const TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _dateSelector() {
-    DateTime currentDate = DateTime.now();
-
-    return Expanded(
-      flex: 13,
-      child: Container(
-        width: _size.width,
-        padding: const EdgeInsets.only(left: 32),
-        child: Stack(
-          alignment: Alignment.centerLeft,
-          children: <Widget>[
-            AnimatedBuilder(
-              animation: _dateBackgroundAc,
-              builder: (ctx, child) {
-                return Transform.translate(
-                  offset: Offset(_dateBackgroundTween.value, 0),
-                  child: child,
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.1),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    bottomLeft: Radius.circular(12),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: _size.width,
-              child: ListView.builder(
-                itemCount: 7,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (ctx, index) {
-                  var date = currentDate.add(Duration(days: index));
-
-                  return AnimatedBuilder(
-                    animation: _dateSelectorACList[index],
-                    builder: (ctx, child) {
-                      return Transform.translate(
-                        offset: Offset(_dateSelectorTweenList[index].value, 0),
-                        child: child,
-                      );
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _dateIndexSelected = index;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        margin: EdgeInsets.symmetric(
-                            vertical: _size.height * .025, horizontal: 12),
-                        width: 44,
-                        decoration: BoxDecoration(
-                            color: _dateIndexSelected == index
-                                ? AppColor.primary
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              _dayFormat(date.weekday),
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: index == _dateIndexSelected
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                            ),
-                            Text(
-                              date.day.toString(),
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600,
-                                height: 1,
-                                color: index == _dateIndexSelected
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String _dayFormat(int dayWeek) {
-    switch (dayWeek) {
-      case 1:
-        return "MO";
-      case 2:
-        return "TU";
-      case 3:
-        return "WE";
-      case 4:
-        return "TH";
-      case 5:
-        return "FR";
-      case 6:
-        return "SA";
-      case 7:
-        return "SU";
-      default:
-        return "MO";
-    }
   }
 
   Widget _appBar() {

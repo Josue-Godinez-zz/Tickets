@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:venta_de_tickets/src/views/booking/booking_screen.dart';
+import 'package:venta_de_tickets/src/views/booking/booking.dart';
 import 'package:video_player/video_player.dart';
 
 class Schedule extends StatefulWidget {
