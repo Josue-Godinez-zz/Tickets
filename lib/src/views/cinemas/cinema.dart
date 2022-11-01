@@ -23,6 +23,7 @@ class _CinemaState extends State<Cinema> {
             parent: AlwaysScrollableScrollPhysics()),
         slivers: <Widget>[
           SliverAppBar(
+            backgroundColor: Theme.of(context).primaryColor,
             pinned: true,
             stretch: true,
             onStretchTrigger: () {
