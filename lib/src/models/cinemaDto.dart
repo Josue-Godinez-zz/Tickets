@@ -11,6 +11,7 @@ class CinemaDto {
   String name = '';
   String description = '';
   String location = '';
+  String? urlImage = '';
   double numberOfWeekSales = 0;
   String status = '';
 
@@ -19,6 +20,7 @@ class CinemaDto {
       required this.name,
       required this.description,
       required this.location,
+      required this.urlImage,
       required this.numberOfWeekSales,
       required this.status});
 
@@ -27,6 +29,7 @@ class CinemaDto {
     name = '';
     description = '';
     location = '';
+    urlImage = '';
     status = '';
   }
 
@@ -36,6 +39,7 @@ class CinemaDto {
         name: json['name'],
         description: (json['description'] != null) ? json['description'] : '',
         location: json['location'],
+        urlImage: json['urlImage'],
         numberOfWeekSales: json['numberOfWeekSales'],
         status: json['Status'],
       );
@@ -46,6 +50,7 @@ class CinemaDto {
         "name": name,
         'description': description,
         "location": location,
+        "urlImage": urlImage,
         "numberOfWeekSales": numberOfWeekSales,
         "status": status,
       };
@@ -55,6 +60,7 @@ class CinemaDto {
         "name": name,
         'description': description,
         "location": location,
+        "urlImage": urlImage,
         "numberOfWeekSales": numberOfWeekSales,
         "status": status,
       };
