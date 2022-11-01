@@ -239,10 +239,6 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                               builder: (ctx, child) {
                                 double perspective =
                                     0.004 * _cinemaScreenTween.value;
-                                // return ClipPath(
-                                //     clipper: VideoClipper(
-                                //         curveValue: monitorTween.value),
-                                //     child: child);
                                 return AspectRatio(
                                   aspectRatio: 16 / 9,
                                   child: Transform(
