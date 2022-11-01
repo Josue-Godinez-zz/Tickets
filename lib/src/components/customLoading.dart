@@ -49,7 +49,7 @@ class _CustomLoadingState extends State<CustomLoading>
         alignment: Alignment.center,
         turns: _controller,
         child: Image.asset(
-          'assets/images/logo1.png',
+          'assets/images/logo11.png',
           height: 110,
           width: 110,
         ),
@@ -65,7 +65,7 @@ class _CustomLoadingState extends State<CustomLoading>
   Widget _buildLoadingTwo() {
     return Stack(alignment: Alignment.center, children: [
       Image.asset(
-        'assets/images/logo1.png',
+        'assets/images/logo11.png',
         height: 50,
         width: 50,
       ),

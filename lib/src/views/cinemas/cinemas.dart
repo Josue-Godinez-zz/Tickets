@@ -135,7 +135,7 @@ class _CinemasState extends State<Cinemas> {
       );
 
   Widget listView() => Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Container(
           height: 630,
           width: 600,
@@ -193,7 +193,7 @@ class _CinemasState extends State<Cinemas> {
                         // itemExtent: 50,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
-                            padding: EdgeInsets.fromLTRB(6, 5, 6, 5),
+                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                             child: itemListView(cinemas[index]),
                           );
                         },
@@ -205,29 +205,80 @@ class _CinemasState extends State<Cinemas> {
 
   ///Component for the items of the listview
   Widget itemListView(CinemaDto cinema) => Container(
-        height: 50,
+        height: 167,
         decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.circular(15),
+          color: '#d9d9d9'.toColor(),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: TextButton(
-          onPressed: () => {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Cinema(
-                title: cinema.name,
-                urlImage: cinema.urlImage!,
-              ),
-            )),
-          },
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Text(cinema.toString(),
-                style: TextStyle(
-                    fontSize: 13,
-                    decoration: TextDecoration.none,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold)),
-          ),
-        ),
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Cinema(
+                      title: cinema.name,
+                      urlImage: cinema.urlImage!,
+                    ),
+                  )),
+                },
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Container(
+                  // height: 167,
+                  decoration: BoxDecoration(
+                    color: '#d9d9d9'.toColor(),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
+                    children: [
+                      cinema.urlImage != ''
+                          ? Image.network(
+                              cinema.urlImage!,
+                              fit: BoxFit.cover,
+                            )
+                          : Icon(
+                              Icons.local_movies,
+                              color: '#4f4f4f'.toColor(),
+                              size: 100,
+                            ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.48,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(cinema.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Flexible(
+                                child: Text(cinema.description,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.normal)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ))
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //   child: Text(cinema.toString(),
+            //       style: TextStyle(
+            //           fontSize: 13,
+            //           decoration: TextDecoration.none,
+            //           color: Colors.black87,
+            //           fontWeight: FontWeight.bold)),
+            // ),
+            ),
       );
 }

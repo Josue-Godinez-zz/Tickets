@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/util/extentions.dart';
 
 import '../movie/movie.dart';
 import '../schedule/schedule.dart';
@@ -42,10 +43,16 @@ class _CinemaState extends State<Cinema> {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(
-                    widget.urlImage,
-                    fit: BoxFit.cover,
-                  ),
+                  widget.urlImage != ''
+                      ? Image.network(
+                          widget.urlImage,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.local_movies,
+                          color: '#ffffff'.toColor(),
+                          size: 150,
+                        ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -84,7 +91,7 @@ class _CinemaState extends State<Cinema> {
                         MaterialPageRoute(
                             builder: (context) => const Movie(
                                 title:
-                                    'Nombre Cinema', // [TODO] Nombre del cinema
+                                    'Nombre Película', // [TODO] Nombre del cinema
                                 urlImage:
                                     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'))); // [TODO] Url imagen del cinema
                   },

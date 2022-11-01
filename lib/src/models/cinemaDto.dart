@@ -39,7 +39,7 @@ class CinemaDto {
         name: json['name'],
         description: (json['description'] != null) ? json['description'] : '',
         location: json['location'],
-        urlImage: json['urlImage'],
+        urlImage: (json['urlImage'] != null) ? json['urlImage'] : '',
         numberOfWeekSales: json['numberOfWeekSales'],
         status: json['Status'],
       );

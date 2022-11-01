@@ -78,7 +78,7 @@ class _lateralMenuState extends State<lateralMenu> {
 
   Widget item(title, icon, onPress) => Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: ElevatedButton(
+        child: TextButton(
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all<Color>('#ffffff'.toColor())),
