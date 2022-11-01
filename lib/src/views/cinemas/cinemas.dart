@@ -2,13 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/cinemaDto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/util/extentions.dart';
 import 'package:venta_de_tickets/src/views/cinemas/cinema.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../components/lateralMenu.dart';
-import '../../models/CinemaDto.dart';
 import '../../util/AppContext.dart';
 
 class Cinemas extends StatefulWidget {
@@ -215,9 +215,7 @@ class _CinemasState extends State<Cinemas> {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Cinema(
                 title: cinema.name,
-                // urlImage: cinema.image,
-                urlImage:
-                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+                urlImage: cinema.urlImage!,
               ),
             )),
           },
