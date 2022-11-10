@@ -45,12 +45,12 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   int _dateIndexSelected = 1;
   int _timeIndexSelected = 1;
   final _chairStatus = [
-    [1, 1, 1, 1, 0, 0, 1],
-    [1, 1, 3, 1, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 1, 1, 1, 1, 1],
-    [1, 1, 1, 2, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 3, 5, 0, 0, 1],
+    [1, 1, 3, 1, 3, 5, 0, 0, 1],
+    [1, 1, 1, 1, 3, 5, 1, 1, 1],
+    [1, 0, 1, 1, 3, 5, 1, 1, 1],
+    [1, 1, 1, 1, 3, 5, 1, 1, 1],
+    [1, 1, 1, 1, 3, 5, 1, 1, 1]
   ];
 
   @override
@@ -225,7 +225,8 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                             opacity: _cinemaChairTween.value + 1, child: child),
                       );
                     },
-                    child: SizedBox(width: _size.width, child: _chairList()))),
+                    child: SizedBox(
+                        width: _size.width, child: GenerateChairList()))),
             Positioned(
               top: 0,
               child: SizedBox(
@@ -342,6 +343,53 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
               fontSize: 12, color: Colors.grey, fontFamily: "Bebas-Neue"),
         ),
       ],
+    );
+  }
+
+  Widget GenerateChairList() {
+    List<Row> chairs = <Row>[];
+    for (int x = 0; x < _chairStatus.length; x++) {
+      List<Widget> row = <Widget>[];
+      for (int y = 0; y < _chairStatus[x].length; y++) {
+        row.add(GestureDetector(
+          onTap: () {
+            if (_chairStatus[x][y] == 1) {
+              setState(() {
+                _chairStatus[x][y] = 4;
+              });
+            } else if (_chairStatus[x][y] == 4) {
+              setState(() {
+                _chairStatus[x][y] = 1;
+              });
+            }
+          },
+          child: Container(
+            height: 25,
+            width: 25,
+            margin: const EdgeInsets.all(5),
+            child: _chairStatus[x][y] == 1
+                ? AppWidget.whiteChair()
+                : _chairStatus[x][y] == 2
+                    ? AppWidget.greyChair()
+                    : _chairStatus[x][y] == 3
+                        ? AppWidget.redChair()
+                        : _chairStatus[x][y] == 5
+                            ? Container()
+                            : AppWidget.yellowChair(),
+          ),
+        ));
+      }
+      chairs.add(Row(
+        children: row,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+      ));
+    }
+
+    return Column(
+      children: chairs,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 
