@@ -5,7 +5,12 @@ import '../schedule/schedule.dart';
 class Movie extends StatefulWidget {
   final String title;
   final String urlImage;
-  const Movie({Key? key, required this.title, required this.urlImage})
+  final String description;
+  const Movie(
+      {Key? key,
+      required this.title,
+      required this.urlImage,
+      required this.description})
       : super(key: key);
 
   @override
@@ -73,10 +78,8 @@ class _Movie extends State<Movie> {
                         style: Theme.of(context).textTheme.headline6),
                     // ignore: prefer_const_constructors
                     Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: const Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum arcu turpis, a lobortis mauris egestas nec. Etiam tempus quis elit ac pulvinar. Nam vel luctus nisi. Pellentesque maximus euismod massa condimentum dapibus. Praesent aliquet urna et libero egestas venenatis'),
-                    ),
+                        padding: const EdgeInsets.all(3),
+                        child: Text(widget.description)),
                     Center(
                         child: IconButton(
                       onPressed: () {
@@ -84,11 +87,11 @@ class _Movie extends State<Movie> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Schedule(
-                                    title:
-                                        'Nombre Cinema2', // [TODO] Nombre del cinema
-                                    urlImage:
-                                        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'))); // [TODO] Url imagen del cinema
+                                builder: (context) => Schedule(
+                                    title: widget
+                                        .title, // [TODO] Nombre del cinema
+                                    urlImage: widget
+                                        .urlImage))); // [TODO] Url imagen del cinema
                       },
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,

@@ -212,6 +212,7 @@ class _CinemasState extends State<Cinemas> {
         ),
         child: TextButton(
             onPressed: () => {
+                  AppContext.getInstance().set('cinemaId', cinema.id!),
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => Cinema(
                       title: cinema.name,

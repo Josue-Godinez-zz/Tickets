@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:mongo_dart/mongo_dart.dart';
 
 class DBConnection {
@@ -5,6 +7,7 @@ class DBConnection {
   static Db? _db;
   static DbCollection? _userCollection;
   static var _cinemasCollection;
+  static var _filmsCollection;
 
   factory DBConnection() {
     return _instance;
@@ -19,6 +22,7 @@ class DBConnection {
     if (!isConnected()) {
       await _db!.open();
       _cinemasCollection = _db?.collection('Cinemas');
+      _filmsCollection = _db?.collection('Peliculas');
     }
   }
 
@@ -62,6 +66,14 @@ class DBConnection {
   /// Return a list of cinemas
   static Future<List<Map<String, dynamic>>> getCinemas() async {
     final array = await _cinemasCollection.find().toList();
+    return array;
+  }
+
+  /// Return a list of films of a cinema
+  static Future<List<Map<String, dynamic>>> getFilmsByCinema(
+      ObjectId cinemaId) async {
+    final array =
+        await _filmsCollection.find(where.eq('cinema', cinemaId)).toList();
     return array;
   }
 

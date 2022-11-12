@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/filmDto.dart';
+import 'package:venta_de_tickets/src/util/AppContext.dart';
 import 'package:venta_de_tickets/src/util/extentions.dart';
 
+import '../../services/dbConnection.dart';
 import '../movie/movie.dart';
 import '../schedule/schedule.dart';
 
@@ -15,6 +18,31 @@ class Cinema extends StatefulWidget {
 }
 
 class _CinemaState extends State<Cinema> {
+  List<FilmDto> cinemas = <FilmDto>[];
+  bool isLoadingCinemas = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getFilms();
+  }
+
+  void getFilms() {
+    isLoadingCinemas = true;
+    DBConnection.getFilmsByCinema(AppContext.getInstance().get('cinemaId'))
+        .then((value) {
+      List<FilmDto> filmsTemp = <FilmDto>[];
+      for (var item in value) {
+        filmsTemp.add(FilmDto.fromJson(item));
+      }
+      setState(() {
+        isLoadingCinemas = false;
+        cinemas.clear();
+        cinemas.addAll(filmsTemp);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,25 +110,56 @@ class _CinemaState extends State<Cinema> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Card(
+                    semanticContainer: false,
                     child: Center(
                         child: TextButton(
-                  onPressed: () {
-                    // Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Movie(
-                                title:
-                                    'Nombre Película', // [TODO] Nombre del cinema
-                                urlImage:
-                                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'))); // [TODO] Url imagen del cinema
-                  },
-                  child: Card(
-                    child: Center(child: Text('Card element - $index')),
-                  ),
-                ))); // [TODO] FORMA DE CADA PELICULA
+                            onPressed: () {
+                              // Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Movie(
+                                            title: cinemas[index]
+                                                .name, // [TODO] Nombre del cinema
+                                            urlImage: cinemas[index].urlImage!,
+                                            description:
+                                                cinemas[index].description,
+                                          ))); // [TODO] Url imagen del cinema
+                            },
+                            child: Column(
+                              children: [
+                                cinemas[index].urlImage != ''
+                                    ? Image.network(
+                                        cinemas[index].urlImage!,
+                                        // fit: BoxFit.cover,
+                                        width: 90,
+                                      )
+                                    : Icon(
+                                        Icons.local_movies,
+                                        color: '#4f4f4f'.toColor(),
+                                        size: 100,
+                                      ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Text(cinemas[index].name,
+                                      textAlign: TextAlign.center,
+                                      // ignore: prefer_const_constructors
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      )),
+                                ),
+                              ],
+                            )
+                            // Card(
+                            //   child: Center(child: Text('Card element - $index')),
+                            // ),
+                            ))); // [TODO] FORMA DE CADA PELICULA
               },
-              childCount: 30, // [TODO] TAMANO TOTAL DE LA LISTA
+              childCount: cinemas.length, // [TODO] TAMANO TOTAL DE LA LISTA
             ),
           ),
         ],
