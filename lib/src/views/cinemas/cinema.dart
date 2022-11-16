@@ -115,6 +115,8 @@ class _CinemaState extends State<Cinema> {
                         child: TextButton(
                             onPressed: () {
                               // Navigator.pop(context);
+                              AppContext.getInstance()
+                                  .set('movieId', cinemas[index].id!);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

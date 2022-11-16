@@ -1,6 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/views/booking/booking.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../services/dbConnection.dart';
+import '../../util/AppContext.dart';
+import 'package:intl/intl.dart';
 
 class Schedule extends StatefulWidget {
   final String title;
@@ -13,6 +20,31 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
+  List<ScheduleDto> shows = <ScheduleDto>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getSchedules();
+  }
+
+  void getSchedules() {
+    DBConnection.getShowsByFilm(AppContext.getInstance().get('movieId'))
+        .then((value) {
+      List<ScheduleDto> showsTemp = <ScheduleDto>[];
+      for (var item in value) {
+        showsTemp.add(ScheduleDto.fromJson(item));
+      }
+      setState(() {
+        shows.clear();
+        shows.addAll(showsTemp);
+        shows.sort((a, b) => DateFormat('dd/mm/yyyy')
+            .parse(a.day)
+            .compareTo(DateFormat('dd/mm/yyyy').parse(b.day)));
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,12 +123,63 @@ class _ScheduleState extends State<Schedule> {
                                           "assets/video/mulanclip.mp4"),
                                 ))); // [TODO] Url imagen del cinema
                   },
-                  child: Card(
-                    child: Center(child: Text('Card element $index')),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // cinemas[index].urlImage != ''
+                      //     ? Image.network(
+                      //         cinemas[index].urlImage!,
+                      //         // fit: BoxFit.cover,
+                      //         width: 90,
+                      //       )
+                      //     : Icon(
+                      //         Icons.local_movies,
+                      //         color: '#4f4f4f'.toColor(),
+                      //         size: 100,
+                      //       ),
+
+                      Center(
+                        child: Text("Dia: ${shows[index].day}",
+                            textAlign: TextAlign.center,
+                            // ignore: prefer_const_constructors
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Center(
+                        child: Text(
+                            "Hora: ${DateFormat('hh:mm').format(DateFormat('hh:mm').parse(shows[index].hour))}",
+                            textAlign: TextAlign.center,
+                            // ignore: prefer_const_constructors
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Center(
+                        child: Text("Sala: ${shows[index].room}",
+                            textAlign: TextAlign.center,
+                            // ignore: prefer_const_constructors
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            )),
+                      ),
+                    ],
                   ),
-                ))); // [TODO] FORMA DE CADA PELICULA
+                ))); // [TODO] FORMA DE CADA FUNCION
               },
-              childCount: 3, // [TODO] TAMANO TOTAL DE LA LISTA
+              childCount: shows.length, // [TODO] TAMANO TOTAL DE LA LISTA
             ),
           ),
         ],
