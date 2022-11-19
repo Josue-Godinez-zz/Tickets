@@ -6,6 +6,7 @@ import 'package:venta_de_tickets/src/util/extentions.dart';
 import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/login/login.dart';
+import 'package:venta_de_tickets/src/views/paymentSection/payment.dart';
 import 'package:venta_de_tickets/src/views/profile/profile.dart';
 
 // ignore: camel_case_types
@@ -49,8 +50,10 @@ class _lateralMenuState extends State<lateralMenu> {
               color: Theme.of(context).primaryColor,
               size: 20,
             ), () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Event()));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => const Event()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Payment()));
         }),
         item(
             "Mi cuenta",
