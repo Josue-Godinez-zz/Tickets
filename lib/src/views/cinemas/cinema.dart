@@ -117,6 +117,8 @@ class _CinemaState extends State<Cinema> {
                               // Navigator.pop(context);
                               AppContext.getInstance()
                                   .set('movieId', cinemas[index].id!);
+                              AppContext.getInstance()
+                                  .set('movieName', cinemas[index].name);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

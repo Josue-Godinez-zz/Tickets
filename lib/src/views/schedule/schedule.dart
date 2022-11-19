@@ -109,18 +109,21 @@ class _ScheduleState extends State<Schedule> {
                         child: TextButton(
                   onPressed: () {
                     // Navigator.pop(context);
-
+                    AppContext.getInstance().set('showId', shows[index].id!);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Booking(
-                                  movieName: 'TEST',
+                                  movieName:
+                                      AppContext.getInstance().get('movieName'),
                                   moviePlayerController:
                                       VideoPlayerController.asset(
                                           "assets/video/mulanclip.mp4"),
+                                  // VideoPlayerController.asset(
+                                  //     "assets/video/mulanclip.mp4"),
                                   reflectionPlayerController:
                                       VideoPlayerController.asset(
-                                          "assets/video/mulanclip.mp4"),
+                                          "assets/video/mulanclip-reflection.mp4"),
                                 ))); // [TODO] Url imagen del cinema
                   },
                   child: Column(

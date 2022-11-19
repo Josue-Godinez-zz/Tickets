@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/bookingDto.dart';
+import 'package:venta_de_tickets/src/services/dbConnection.dart';
+import 'package:venta_de_tickets/src/util/AppContext.dart';
 import 'package:venta_de_tickets/src/widgets/app_widget.dart';
 import 'package:venta_de_tickets/src/widgets/videoclipper.dart';
 import 'package:venta_de_tickets/src/widgets/videoclipper2.dart';
@@ -45,23 +48,42 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   int _dateIndexSelected = 1;
   int _timeIndexSelected = 1;
   final _chairStatus = [
-    [1, 1, 1, 1, 3, 5, 0, 0, 1],
-    [1, 1, 3, 1, 3, 5, 0, 0, 1],
-    [1, 1, 1, 1, 3, 5, 1, 1, 1],
-    [1, 0, 1, 1, 3, 5, 1, 1, 1],
-    [1, 1, 1, 1, 3, 5, 1, 1, 1],
-    [1, 1, 1, 1, 3, 5, 1, 1, 1]
+    [1, 1, 1, 1, 1, 5, 1, 1, 1],
+    [1, 1, 1, 1, 1, 5, 1, 1, 1],
+    [1, 1, 1, 1, 1, 5, 1, 1, 1],
+    [1, 1, 1, 1, 1, 5, 1, 1, 1],
+    [1, 1, 1, 1, 1, 5, 1, 1, 1]
   ];
+
+  bool isLoadingBookins = false;
 
   @override
   void initState() {
     super.initState();
+    getSeats();
+    initializeAnimation();
     widget.moviePlayerController.setLooping(true);
     widget.reflectionPlayerController.setLooping(true);
+    widget.moviePlayerController.initialize();
     widget.moviePlayerController.play();
     widget.reflectionPlayerController.play();
+  }
 
-    initializeAnimation();
+  void getSeats() {
+    isLoadingBookins = true;
+    DBConnection.getBookingsByShow(AppContext.getInstance().get('showId'))
+        .then((value) {
+      List<BookingDto> bookingsTemp = <BookingDto>[];
+      for (var item in value) {
+        bookingsTemp.add(BookingDto.fromJson(item));
+      }
+      setState(() {
+        isLoadingBookins = false;
+        for (var seat in bookingsTemp) {
+          _chairStatus[int.parse(seat.row)][int.parse(seat.column)] = 2;
+        }
+      });
+    });
   }
 
   void initializeAnimation() {
@@ -292,17 +314,17 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _chairCategory(Colors.white, "FREE"),
-                  _chairCategory(AppColor.primary, "YOURS"),
-                  _chairCategory(Colors.grey, "RESERVED"),
-                  _chairCategory(Colors.red, "NOT AVAILABLE"),
+                  _chairCategory(Colors.white, "LIBRE"),
+                  _chairCategory(AppColor.primary, "TUYO"),
+                  _chairCategory(Colors.grey, "OCUPADO"),
+                  _chairCategory(Colors.red, "NO DISPONIBLE"),
                 ],
               ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 32, right: 32, bottom: 8),
               child: MaterialButton(
-                color: AppColor.primary,
+                color: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 onPressed: () {},
@@ -313,7 +335,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                     child: Text(
                       'Reservar',
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                     ),

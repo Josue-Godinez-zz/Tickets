@@ -9,6 +9,7 @@ class DBConnection {
   static var _cinemasCollection;
   static var _filmsCollection;
   static var _scheduleCollection;
+  static var _bookingCollection;
 
   factory DBConnection() {
     return _instance;
@@ -25,6 +26,7 @@ class DBConnection {
       _cinemasCollection = _db?.collection('Cinemas');
       _filmsCollection = _db?.collection('Peliculas');
       _scheduleCollection = _db?.collection('Schedule');
+      _bookingCollection = _db?.collection('Bookings');
     }
   }
 
@@ -84,6 +86,14 @@ class DBConnection {
       ObjectId filmId) async {
     final array =
         await _scheduleCollection.find(where.eq('film', filmId)).toList();
+    return array;
+  }
+
+  /// Return a list of booking of a show
+  static Future<List<Map<String, dynamic>>> getBookingsByShow(
+      ObjectId showId) async {
+    final array =
+        await _bookingCollection.find(where.eq('show', showId)).toList();
     return array;
   }
 
