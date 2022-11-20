@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/util/extentions.dart';
 
 import '../schedule/schedule.dart';
 
@@ -47,10 +48,16 @@ class _Movie extends State<Movie> {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(
-                    widget.urlImage,
-                    fit: BoxFit.cover,
-                  ),
+                  widget.urlImage != ''
+                      ? Image.network(
+                          widget.urlImage,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.local_movies,
+                          color: '#4f4f4f'.toColor(),
+                          size: 100,
+                        ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(

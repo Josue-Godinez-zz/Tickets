@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/models/scheduleDto.dart';
+import 'package:venta_de_tickets/src/util/extentions.dart';
 import 'package:venta_de_tickets/src/views/booking/booking.dart';
 import 'package:video_player/video_player.dart';
 
@@ -72,10 +73,16 @@ class _ScheduleState extends State<Schedule> {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Image.network(
-                    widget.urlImage,
-                    fit: BoxFit.cover,
-                  ),
+                  widget.urlImage != ''
+                      ? Image.network(
+                          widget.urlImage,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.local_movies,
+                          color: '#4f4f4f'.toColor(),
+                          size: 100,
+                        ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
