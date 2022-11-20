@@ -26,23 +26,9 @@ class Movie extends StatefulWidget {
 class _Movie extends State<Movie> {
   List<ScheduleDto> scheduleList = [];
 
-  void getScheduleList() async {
-    DBConnection.selectCollection("Schedule");
-    scheduleList = (await DBConnection.getScheduleByFilms(widget.cinema.id!))
-        .cast<ScheduleDto>();
-
-    DBConnection.getScheduleByFilms(widget.cinema.id!).then((value) {
-      List<ScheduleDto> scheduleList = <ScheduleDto>[];
-      for (var item in value) {
-        scheduleList.add(ScheduleDto.fromJson(item));
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    getScheduleList();
   }
 
   @override

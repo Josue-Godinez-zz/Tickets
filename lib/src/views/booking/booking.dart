@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/models/bookingDto.dart';
+import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/util/AppContext.dart';
 import 'package:venta_de_tickets/src/widgets/app_widget.dart';
@@ -47,13 +48,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
 
   int _dateIndexSelected = 1;
   int _timeIndexSelected = 1;
-  final _chairStatus = [
-    [1, 1, 1, 1, 1, 5, 1, 1, 1],
-    [1, 1, 1, 1, 1, 5, 1, 1, 1],
-    [1, 1, 1, 1, 1, 5, 1, 1, 1],
-    [1, 1, 1, 1, 1, 5, 1, 1, 1],
-    [1, 1, 1, 1, 1, 5, 1, 1, 1]
-  ];
+  List<dynamic> _chairStatus = [];
 
   bool isLoadingBookins = false;
 
@@ -61,12 +56,25 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     getSeats();
+    getChairs();
     initializeAnimation();
     widget.moviePlayerController.setLooping(true);
     widget.reflectionPlayerController.setLooping(true);
     widget.moviePlayerController.initialize();
     widget.moviePlayerController.play();
     widget.reflectionPlayerController.play();
+  }
+
+  void getChairs() {
+    DBConnection.getScheduleById(AppContext.getInstance().get('showId'))
+        .then((value) {
+      ScheduleDto scheduleDto;
+      if (value != null) {
+        scheduleDto = ScheduleDto.fromJson(value);
+        _chairStatus = scheduleDto.chairs;
+        setState(() {});
+      }
+    });
   }
 
   void getSeats() {

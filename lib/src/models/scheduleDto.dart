@@ -12,19 +12,21 @@ class ScheduleDto {
   String hour = '';
   ObjectId? filmId;
   String? room = '';
+  List<dynamic> chairs = [];
 
-  ScheduleDto({
-    required this.id,
-    required this.day,
-    required this.hour,
-    required this.filmId,
-    required this.room,
-  });
+  ScheduleDto(
+      {required this.id,
+      required this.day,
+      required this.hour,
+      required this.filmId,
+      required this.room,
+      required this.chairs});
 
   ScheduleDto.empty() {
     day = '';
     hour = '';
     room = '';
+    chairs = [];
   }
 
   ///Convert Json object to scheduleDto object
@@ -34,13 +36,25 @@ class ScheduleDto {
         hour: json['hour'],
         room: json['room'],
         filmId: json["film"],
+        chairs: json["chairs"],
       );
 
   ///Convert scheduleDto object to Json object
-  Map<String, dynamic> toJson() =>
-      {"_id": id, "day": day, 'hour': hour, "room": room, "film": filmId};
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "day": day,
+        'hour': hour,
+        "room": room,
+        "film": filmId,
+        "chairs": chairs
+      };
 
   ///Convert scheduleDto object to Json object withot id object
-  Map<String, dynamic> toJsonWithoutId() =>
-      {"day": day, 'hour': hour, "room": room, "film": filmId};
+  Map<String, dynamic> toJsonWithoutId() => {
+        "day": day,
+        'hour': hour,
+        "room": room,
+        "film": filmId,
+        "chairs": chairs
+      };
 }

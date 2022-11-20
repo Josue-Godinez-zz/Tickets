@@ -85,118 +85,120 @@ class _Profile extends State<Profile> {
 
   @override
   Widget build(Object context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: Column(
-            children: [
-              Badge(
-                  showBadge: true,
-                  badgeColor: const Color.fromARGB(144, 133, 43, 236),
-                  badgeContent: const Icon(Icons.add_a_photo),
-                  child: GestureDetector(
-                    onTap: () {
-                      SmartDialog.show(
-                          alignment: Alignment.centerRight,
-                          animationType: SmartAnimationType.fade,
-                          builder: (BuildContext context) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  child: Row(children: const [
-                                    Icon(Icons.camera_alt_outlined),
-                                    Text('Camara')
-                                  ]),
-                                  onPressed: () => {openCamara()},
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                ElevatedButton(
-                                  child: Row(children: const [
-                                    Icon(Icons.photo),
-                                    Text('Galery')
-                                  ]),
-                                  onPressed: () => {openGalery()},
-                                )
-                              ],
-                            );
-                          });
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(360),
-                      child: const ProfilePicture(
-                        fontsize: 21,
-                        random: true,
-                        name: 'USERNAME',
-                        radius: 45,
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Column(
+              children: [
+                Badge(
+                    showBadge: true,
+                    badgeColor: const Color.fromARGB(144, 133, 43, 236),
+                    badgeContent: const Icon(Icons.add_a_photo),
+                    child: GestureDetector(
+                      onTap: () {
+                        SmartDialog.show(
+                            alignment: Alignment.centerRight,
+                            animationType: SmartAnimationType.fade,
+                            builder: (BuildContext context) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    child: Row(children: const [
+                                      Icon(Icons.camera_alt_outlined),
+                                      Text('Camara')
+                                    ]),
+                                    onPressed: () => {openCamara()},
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  ElevatedButton(
+                                    child: Row(children: const [
+                                      Icon(Icons.photo),
+                                      Text('Galery')
+                                    ]),
+                                    onPressed: () => {openGalery()},
+                                  )
+                                ],
+                              );
+                            });
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(360),
+                        child: const ProfilePicture(
+                          fontsize: 21,
+                          random: true,
+                          name: 'USERNAME',
+                          radius: 45,
+                        ),
                       ),
-                    ),
-                  )),
-            ],
+                    )),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 15),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Name",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 0.5,
-                  fontWeight: FontWeight.bold)),
-        ),
-        CustomEditableText(
-          data: "USERNAME",
-          field: 'name',
-          style: const TextStyle(fontSize: 20),
-        ),
-        const SizedBox(height: 10),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Username ",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 0.5,
-                  fontWeight: FontWeight.bold)),
-        ),
-        CustomEditableText(
-          data: "USERNAME",
-          field: 'username',
-          style: const TextStyle(fontSize: 20),
-        ),
-        const SizedBox(height: 10),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Phone",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 0.5,
-                  fontWeight: FontWeight.bold)),
-        ),
-        CustomEditableText(
-          data: "DATA",
-          field: 'phone',
-          style: const TextStyle(fontSize: 20),
-        ),
-        const SizedBox(height: 10),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Email",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 0.5,
-                  fontWeight: FontWeight.bold)),
-        ),
-        CustomEditableText(
-          data: "DATA",
-          field: 'email',
-          style: const TextStyle(fontSize: 20),
-        ),
-        const SizedBox(height: 10),
-      ],
+          const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Name",
+                style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                    fontWeight: FontWeight.bold)),
+          ),
+          CustomEditableText(
+            data: "USERNAME",
+            field: 'name',
+            style: const TextStyle(fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Username ",
+                style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                    fontWeight: FontWeight.bold)),
+          ),
+          CustomEditableText(
+            data: "USERNAME",
+            field: 'username',
+            style: const TextStyle(fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Phone",
+                style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                    fontWeight: FontWeight.bold)),
+          ),
+          CustomEditableText(
+            data: "DATA",
+            field: 'phone',
+            style: const TextStyle(fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Email",
+                style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                    fontWeight: FontWeight.bold)),
+          ),
+          CustomEditableText(
+            data: "DATA",
+            field: 'email',
+            style: const TextStyle(fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }

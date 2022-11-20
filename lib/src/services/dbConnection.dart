@@ -98,12 +98,9 @@ class DBConnection {
     return array;
   }
 
-  static Future<List<Map<String, dynamic>>> getScheduleByFilms(
-      ObjectId peliculaId) async {
-    final array = await _scheduleCollection
-        .find(where.eq('peliculaId', peliculaId))
-        .toList();
-    return array;
+  static Future<Map<String, dynamic>> getScheduleById(id) async {
+    final result = await _scheduleCollection.findOne(where.eq('_id', id));
+    return result;
   }
 
   static String _getConnectionString() {
