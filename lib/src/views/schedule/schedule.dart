@@ -13,7 +13,12 @@ import 'package:intl/intl.dart';
 class Schedule extends StatefulWidget {
   final String title;
   final String urlImage;
-  const Schedule({Key? key, required this.title, required this.urlImage})
+  final List<List<int>> idMovie;
+  const Schedule(
+      {Key? key,
+      required this.title,
+      required this.urlImage,
+      required this.idMovie})
       : super(key: key);
 
   @override

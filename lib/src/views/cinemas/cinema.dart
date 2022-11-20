@@ -105,7 +105,6 @@ class _CinemaState extends State<Cinema> {
               maxCrossAxisExtent: 200.0,
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
-              // childAspectRatio: 4.0,
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -123,12 +122,13 @@ class _CinemaState extends State<Cinema> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Movie(
-                                            title: cinemas[index]
-                                                .name, // [TODO] Nombre del cinema
-                                            urlImage: cinemas[index].urlImage!,
-                                            description:
-                                                cinemas[index].description,
-                                          ))); // [TODO] Url imagen del cinema
+                                          title: cinemas[index]
+                                              .name, // [TODO] Nombre del cinema
+                                          urlImage: cinemas[index].urlImage!,
+                                          description:
+                                              cinemas[index].description,
+                                          cinema: cinemas[
+                                              index]))); // [TODO] Url imagen del cinema
                             },
                             child: Column(
                               children: [
@@ -143,7 +143,7 @@ class _CinemaState extends State<Cinema> {
                                         color: '#4f4f4f'.toColor(),
                                         size: 100,
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Center(
@@ -157,11 +157,7 @@ class _CinemaState extends State<Cinema> {
                                       )),
                                 ),
                               ],
-                            )
-                            // Card(
-                            //   child: Center(child: Text('Card element - $index')),
-                            // ),
-                            ))); // [TODO] FORMA DE CADA PELICULA
+                            )))); // [TODO] FORMA DE CADA PELICULA
               },
               childCount: cinemas.length, // [TODO] TAMANO TOTAL DE LA LISTA
             ),

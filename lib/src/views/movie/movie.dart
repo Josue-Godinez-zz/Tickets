@@ -1,24 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:venta_de_tickets/src/util/extentions.dart';
+import 'package:venta_de_tickets/src/models/filmDto.dart';
+import 'package:venta_de_tickets/src/models/scheduleDto.dart';
+import 'package:venta_de_tickets/src/services/dbConnection.dart';
 
+import '../../util/AppContext.dart';
 import '../schedule/schedule.dart';
 
 class Movie extends StatefulWidget {
   final String title;
   final String urlImage;
   final String description;
+  final FilmDto cinema;
   const Movie(
       {Key? key,
       required this.title,
       required this.urlImage,
-      required this.description})
+      required this.description,
+      required this.cinema})
       : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _Movie();
 }
 
 class _Movie extends State<Movie> {
+  List<ScheduleDto> scheduleList = [];
+
+  void getScheduleList() async {
+    DBConnection.selectCollection("Schedule");
+    scheduleList = (await DBConnection.getScheduleByFilms(widget.cinema.id!))
+        .cast<ScheduleDto>();
+
+    DBConnection.getScheduleByFilms(widget.cinema.id!).then((value) {
+      List<ScheduleDto> scheduleList = <ScheduleDto>[];
+      for (var item in value) {
+        scheduleList.add(ScheduleDto.fromJson(item));
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getScheduleList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -81,7 +107,7 @@ class _Movie extends State<Movie> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Descripción',
+                    Text(scheduleList.length.toString(),
                         style: Theme.of(context).textTheme.headline6),
                     // ignore: prefer_const_constructors
                     Padding(
@@ -95,10 +121,11 @@ class _Movie extends State<Movie> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Schedule(
-                                    title: widget
-                                        .title, // [TODO] Nombre del cinema
-                                    urlImage: widget
-                                        .urlImage))); // [TODO] Url imagen del cinema
+                                      title: widget
+                                          .title, // [TODO] Nombre del cinema
+                                      urlImage: widget.urlImage,
+                                      idMovie: const [],
+                                    ))); // [TODO] Url imagen del cinema
                       },
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,

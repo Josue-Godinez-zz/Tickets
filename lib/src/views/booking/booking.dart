@@ -8,9 +8,9 @@ import 'package:venta_de_tickets/src/widgets/videoclipper2.dart';
 import 'package:video_player/video_player.dart';
 
 class Booking extends StatefulWidget {
+  final String movieName;
   final VideoPlayerController moviePlayerController;
   final VideoPlayerController reflectionPlayerController;
-  final String movieName;
 
   const Booking(
       {super.key,
@@ -184,31 +184,6 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
             Container(
               width: _size.width,
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 18),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * .8,
-                height: 800,
-                child: Center(
-                  child: widget.reflectionPlayerController.value.isInitialized
-                      ? AnimatedBuilder(
-                          animation: _reflectionAc,
-                          builder: (ctx, child) {
-                            return Opacity(
-                              opacity: _reflectionTween.value,
-                              child: child,
-                            );
-                          },
-                          child: AspectRatio(
-                            aspectRatio: .5,
-                            child:
-                                VideoPlayer(widget.reflectionPlayerController),
-                          ),
-                        )
-                      : Container(),
-                ),
-              ),
-            ),
             Positioned(
               top: 48,
               child: ClipPath(
@@ -249,41 +224,6 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                     },
                     child: SizedBox(
                         width: _size.width, child: GenerateChairList()))),
-            Positioned(
-              top: 0,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * .8,
-                child: Column(
-                  children: <Widget>[
-                    Center(
-                      child: widget.moviePlayerController.value.isInitialized
-                          ? AnimatedBuilder(
-                              animation: _cinemaScreenAc,
-                              builder: (ctx, child) {
-                                double perspective =
-                                    0.004 * _cinemaScreenTween.value;
-                                return AspectRatio(
-                                  aspectRatio: 16 / 9,
-                                  child: Transform(
-                                      alignment: Alignment.topCenter,
-                                      transform: Matrix4.identity()
-                                        ..setEntry(3, 2, perspective)
-                                        ..rotateX(_cinemaScreenTween.value),
-                                      child: ClipPath(
-                                          clipper: VideoClipper(
-                                              curveValue:
-                                                  _cinemaScreenTween.value),
-                                          child: child)),
-                                );
-                              },
-                              child: VideoPlayer(widget.moviePlayerController),
-                            )
-                          : Container(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ));
   }
@@ -402,16 +342,16 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
         ));
       }
       chairs.add(Row(
-        children: row,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        children: row,
       ));
     }
 
     return Column(
-      children: chairs,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
+      children: chairs,
     );
   }
 

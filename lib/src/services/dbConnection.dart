@@ -27,6 +27,7 @@ class DBConnection {
       _filmsCollection = _db?.collection('Peliculas');
       _scheduleCollection = _db?.collection('Schedule');
       _bookingCollection = _db?.collection('Bookings');
+      _scheduleCollection = _db!.collection('Schedule');
     }
   }
 
@@ -94,6 +95,14 @@ class DBConnection {
       ObjectId showId) async {
     final array =
         await _bookingCollection.find(where.eq('show', showId)).toList();
+    return array;
+  }
+
+  static Future<List<Map<String, dynamic>>> getScheduleByFilms(
+      ObjectId peliculaId) async {
+    final array = await _scheduleCollection
+        .find(where.eq('peliculaId', peliculaId))
+        .toList();
     return array;
   }
 
