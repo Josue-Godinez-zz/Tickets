@@ -111,8 +111,8 @@ class _SignInState extends State<SignIn> {
                         report.then((value) {
                           if (value['status'] as bool) {
                             SmartDialog.dismiss();
-                            Navigator.pop(context);
-                            Navigator.push(
+                            // Navigator.pop(context);
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Landing(
