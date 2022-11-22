@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 import 'package:venta_de_tickets/src/models/bookingDto.dart';
 import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
@@ -50,6 +51,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   int _dateIndexSelected = 1;
   int _timeIndexSelected = 1;
   List<dynamic> _chairStatus = [];
+  bool isSelectedChairs = false;
 
   bool isLoadingBookins = false;
 
@@ -78,6 +80,18 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
     });
   }
 
+  void checkSelection() {
+    var chairs = [];
+    for (var row in _chairStatus) {
+      for (var i = 0; i < row.length; i++) {
+        if (row[i] == 4) {
+          chairs.add(row[i]);
+        }
+      }
+    }
+    chairs.length > 0 ? setState(() => {isSelectedChairs = true}) : null;
+  }
+
   void getSeats() {
     isLoadingBookins = true;
     DBConnection.getBookingsByShow(AppContext.getInstance().get('showId'))
@@ -93,6 +107,17 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
         }
       });
     });
+  }
+
+  void showToast(String msg, {int? duration, int? gravity}) {
+    Toast.show(msg,
+        duration: duration,
+        gravity: gravity,
+        // ignore: prefer_const_constructors
+        textStyle: TextStyle(
+            decoration: TextDecoration.none,
+            fontSize: 15,
+            color: Colors.white));
   }
 
   void initializeAnimation() {
@@ -173,6 +198,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -277,12 +303,18 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Summary(
-                                chairStatus: _chairStatus,
-                              )));
+                  checkSelection();
+                  isSelectedChairs
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Summary(
+                                    chairStatus: _chairStatus,
+                                  )))
+                      : showToast(
+                          "Por favor seleccione al menos un asiento para continuar.",
+                          gravity: Toast.bottom,
+                          duration: 1);
                 },
                 child: SizedBox(
                   width: _size.width - 64,

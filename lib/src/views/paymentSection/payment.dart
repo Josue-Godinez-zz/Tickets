@@ -30,7 +30,12 @@ class _PaymentState extends State<Payment> {
                         child: Text(!paying ? 'Prueba PayPal' : 'Pagando'))
                   ])
             // : PaypalPayment(onFinish: () => {}),
-            : PaypalPayment(onFinish: (number) => {log(number)}),
+            : PaypalPayment(
+                onFinish: (number) => {log(number)},
+                billingData: {},
+                price: "0.0",
+                quantity: 0,
+              ),
       ),
     );
   }

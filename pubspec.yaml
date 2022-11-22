@@ -53,6 +53,7 @@ dependencies:
   http_auth: ^1.0.1
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.4
+  toast: ^0.3.0
   # flutter_paypal: ^0.0.8
 
 dev_dependencies:

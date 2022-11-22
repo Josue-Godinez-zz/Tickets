@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_local_variable
 
 import 'dart:core';
 import 'dart:developer';
@@ -9,8 +9,16 @@ import './../../services/PaypalService/paypalService.dart';
 
 class PaypalPayment extends StatefulWidget {
   final Function onFinish;
+  var billingData = {};
+  var price = '0';
+  var quantity = 0;
+  var rateCurrency = 615;
 
-  PaypalPayment({required this.onFinish});
+  PaypalPayment(
+      {required this.onFinish,
+      required this.billingData,
+      required this.price,
+      required this.quantity});
 
   @override
   State<StatefulWidget> createState() {
@@ -79,23 +87,21 @@ class PaypalPaymentState extends State<PaypalPayment> {
   int quantity = 2;
 
   Map<String, dynamic> getOrderParams() {
+    var price = double.parse(
+        (double.parse(widget.price) / widget.rateCurrency).toStringAsFixed(2));
     List items = [
       {
-        "name": itemName,
-        "quantity": quantity,
-        "price": itemPrice,
+        "name": "Tiquete",
+        "quantity": widget.quantity,
+        "price": price.toString(),
         "currency": defaultCurrency["currency"]
       },
-      {
-        "name": itemName,
-        "quantity": quantity,
-        "price": itemPrice,
-        "currency": defaultCurrency["currency"]
-      }
     ];
     num total = 0;
     items.forEach((element) {
-      total += (num.parse(element['price']) * element['quantity']);
+      total += (double.parse((double.parse(widget.price) / widget.rateCurrency)
+              .toStringAsFixed(2)) *
+          widget.quantity);
     });
     // checkout invoice details
     String totalAmount = total.toString();
@@ -134,18 +140,18 @@ class PaypalPaymentState extends State<PaypalPayment> {
             if (isEnableShipping && isEnableAddress)
               "shipping_address": {
                 "recipient_name": '$userFirstName $userLastName',
-                "line1": addressStreet,
+                "line1": widget.billingData["street"],
                 "line2": "",
-                "city": addressCity,
-                "country_code": addressCountry,
-                "postal_code": addressZipCode,
-                "phone": addressPhoneNumber,
-                "state": addressState
+                "city": widget.billingData["city"],
+                "country_code": widget.billingData["country"],
+                "postal_code": widget.billingData["postalCode"],
+                "phone": widget.billingData["phone"],
+                "state": widget.billingData["state"]
               },
           }
         }
       ],
-      "note_to_payer": "Contact us for any questions on your order.",
+      "note_to_payer": "Disfruta la pelicula y gracias por la compra.",
       "redirect_urls": {"return_url": returnURL, "cancel_url": cancelURL}
     };
     return temp;

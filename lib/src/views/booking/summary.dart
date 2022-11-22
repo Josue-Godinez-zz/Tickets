@@ -39,6 +39,14 @@ class Summary extends StatefulWidget {
   ];
   List<dynamic> chairStatus = [];
   Summary({super.key, required this.chairStatus});
+  var nameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var cityController = TextEditingController();
+  var streetController = TextEditingController();
+  var postalCodeController = TextEditingController();
+  var countryController = TextEditingController();
+  var stateController = TextEditingController();
+  var phoneController = TextEditingController();
 
   @override
   State<Summary> createState() => _SummaryState();
@@ -46,6 +54,7 @@ class Summary extends StatefulWidget {
 
 class _SummaryState extends State<Summary> {
   bool paying = false;
+  var quantity = 0;
   String getChairs() {
     var chairs = [];
     for (var row in widget.chairStatus) {
@@ -61,7 +70,23 @@ class _SummaryState extends State<Summary> {
     for (var i = 0; i < chairs.length; i++) {
       text += i != chairs.length - 1 ? "${chairs[i]}, " : chairs[i];
     }
+    setState(() {
+      quantity = chairs.length;
+    });
     return text;
+  }
+
+  Map<String, String> getBillingInfo() {
+    return {
+      "name": widget.nameController.text,
+      "lastName": widget.lastNameController.text,
+      "country": widget.countryController.text,
+      "state": widget.stateController.text,
+      "city": widget.cityController.text,
+      "street": widget.streetController.text,
+      "postalCode": widget.postalCodeController.text,
+      "phone": widget.phoneController.text,
+    };
   }
 
   @override
@@ -71,7 +96,7 @@ class _SummaryState extends State<Summary> {
         ? SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                title: const Text("Resumen"),
+                title: const Text("Resumen y datos de compra"),
                 centerTitle: true,
                 backgroundColor: Theme.of(context).primaryColor,
                 leading: Builder(
@@ -136,7 +161,44 @@ class _SummaryState extends State<Summary> {
                           fontWeight: FontWeight.bold),
                     ),
                     Expanded(
-                      child: Container(),
+                      child: Container(
+                          // child: Column(
+                          //   children: [
+                          //     textFieldNoIcon(
+                          //       'Nombre',
+                          //       widget.nameController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Apellido',
+                          //       widget.lastNameController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'País',
+                          //       widget.countryController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Estado/Provincia',
+                          //       widget.stateController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Ciudad',
+                          //       widget.cityController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Calle',
+                          //       widget.streetController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Codigo Postal',
+                          //       widget.postalCodeController,
+                          //     ),
+                          //     textFieldNoIcon(
+                          //       'Telefono',
+                          //       widget.phoneController,
+                          //     ),
+                          //   ],
+                          // ),
+                          ),
                     ),
                     Center(
                         child: Column(
@@ -169,6 +231,47 @@ class _SummaryState extends State<Summary> {
               )),
             ),
           )
-        : PaypalPayment(onFinish: (number) => {log(number)});
+        : PaypalPayment(
+            onFinish: (number) => {log(number)},
+            billingData: getBillingInfo(),
+            price: AppContext.getInstance().get("price"),
+            quantity: quantity,
+          );
   }
+
+  Widget textFieldNoIcon(String text, controller, {nLines, validator}) =>
+      Padding(
+        padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 500,
+              height: 60,
+              decoration: BoxDecoration(
+                  color: "#E5E7E9".toColor(),
+                  borderRadius: BorderRadius.circular(18)),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                child: TextFormField(
+                    onChanged: (value) {
+                      log(value);
+                    },
+                    controller: controller,
+                    maxLines: nLines,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: text,
+                        labelStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        )),
+                    validator: validator),
+              ),
+            ),
+          ],
+        ),
+      );
 }

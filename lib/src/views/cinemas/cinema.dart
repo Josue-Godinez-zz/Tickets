@@ -118,6 +118,8 @@ class _CinemaState extends State<Cinema> {
                                   .set('movieId', cinemas[index].id!);
                               AppContext.getInstance()
                                   .set('movieName', cinemas[index].name);
+                              AppContext.getInstance()
+                                  .set('price', cinemas[index].price);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
