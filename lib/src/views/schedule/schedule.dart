@@ -126,7 +126,7 @@ class _ScheduleState extends State<Schedule> {
                     AppContext.getInstance().set('day', shows[index].day);
                     AppContext.getInstance().set('hour', shows[index].hour);
                     AppContext.getInstance().set('room', shows[index].room!);
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Booking(

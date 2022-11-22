@@ -75,6 +75,7 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
       if (value != null) {
         scheduleDto = ScheduleDto.fromJson(value);
         _chairStatus = scheduleDto.chairs;
+        AppContext.getInstance().set('scheduleDto', scheduleDto);
         setState(() {});
       }
     });

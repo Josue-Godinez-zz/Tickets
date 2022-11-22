@@ -51,7 +51,7 @@ class _SignUpState extends State<SignUp> {
       if (value['status'] as bool) {
         SmartDialog.dismiss();
         Navigator.pop(context);
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => Landing(
@@ -154,7 +154,7 @@ class _SignUpState extends State<SignUp> {
                           {
                             SmartDialog.dismiss(),
                             Navigator.pop(context),
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => Landing(
@@ -197,7 +197,7 @@ class _SignUpState extends State<SignUp> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const SignIn()))
                 },
                 child: const Text(

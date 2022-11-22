@@ -184,10 +184,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
                     .then((id) {
                   widget.onFinish(id);
                 });
-              } else {
-                Navigator.of(context).pop();
               }
-              Navigator.of(context).pop();
+              // else {
+              //   Navigator.of(context).pop();
+              // }
+              // Navigator.of(context).pop();
             }
             if (request.url.contains(cancelURL)) {
               Navigator.of(context).pop();

@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:venta_de_tickets/src/util/AppContext.dart';
+import 'package:venta_de_tickets/src/views/booking/confirmation.dart';
 import '../../util/extentions.dart';
 import '../paymentSection/paymentview.dart';
 
@@ -96,7 +97,7 @@ class _SummaryState extends State<Summary> {
         ? SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                title: const Text("Resumen y datos de compra"),
+                title: const Text("Resumen"),
                 centerTitle: true,
                 backgroundColor: Theme.of(context).primaryColor,
                 leading: Builder(
@@ -232,7 +233,15 @@ class _SummaryState extends State<Summary> {
             ),
           )
         : PaypalPayment(
-            onFinish: (number) => {log(number)},
+            onFinish: (id) => {
+              log(id),
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => Confirmation(
+                  chairStatus: widget.chairStatus,
+                  id: id != null ? id : "",
+                ),
+              ))
+            },
             billingData: getBillingInfo(),
             price: AppContext.getInstance().get("price"),
             quantity: quantity,

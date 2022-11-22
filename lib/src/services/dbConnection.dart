@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 
 class DBConnection {
   static final DBConnection _instance = DBConnection._instance;
@@ -96,6 +97,17 @@ class DBConnection {
     final array =
         await _bookingCollection.find(where.eq('show', showId)).toList();
     return array;
+  }
+
+  // Update the data from the schedule
+  static Future<String> saveScheduleData(ScheduleDto scheduleDto) async {
+    scheduleDto.id ??= ObjectId();
+    try {
+      var resultUser = await _scheduleCollection.save(scheduleDto.toJson());
+      return "Datos guardados correctamente";
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   static Future<Map<String, dynamic>> getScheduleById(id) async {
