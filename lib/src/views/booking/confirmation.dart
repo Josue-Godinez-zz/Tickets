@@ -154,7 +154,7 @@ class _ConfirmationState extends State<Confirmation> {
                       height: 10,
                     ),
                     Text(
-                      getChairs(),
+                      getChairs().toUpperCase(),
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 18,

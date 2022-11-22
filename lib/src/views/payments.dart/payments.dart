@@ -1,11 +1,53 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:venta_de_tickets/src/components/lateralMenu.dart';
+import 'package:venta_de_tickets/src/models/billingDto.dart';
+import 'package:venta_de_tickets/src/models/cinemaDto.dart';
+import 'package:venta_de_tickets/src/models/filmDto.dart';
+import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/util/extentions.dart';
+
+import '../../models/userdto.dart';
+import '../../services/dbConnection.dart';
+import '../../util/AppContext.dart';
 
 class Payments extends StatefulWidget {
   Payments({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  var alphabet = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+  ];
 
   @override
   State<Payments> createState() => _PaymentsState();
@@ -16,12 +58,37 @@ class _PaymentsState extends State<Payments> {
       RefreshController(initialRefresh: false);
   bool isLoadingPayments = false;
   var payments = [];
+  UserDto userDto = AppContext.getInstance().get('user');
 
   ///Method to refresh the list of products
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
     // getCinemas();
+    getUserPayments();
     _refreshController.refreshCompleted();
+  }
+
+  void getUserPayments() {
+    isLoadingPayments = true;
+    DBConnection.getPaymentsByUsers(userDto.userId!).then((value) async {
+      List<Map<dynamic, dynamic>> billingTemp = <Map<dynamic, dynamic>>[];
+      for (var item in value) {
+        BillingDto b = BillingDto.fromJson(item);
+        ScheduleDto s = ScheduleDto.fromJson(
+            await DBConnection.getScheduleById(b.scheduleId!));
+
+        FilmDto f =
+            FilmDto.fromJson((await DBConnection.getFilmsById(b.filmId!)));
+        CinemaDto c =
+            CinemaDto.fromJson(await DBConnection.getCinemasById(f.cinemaId));
+        billingTemp.add({"billing": b, "cinema": c, "film": f, "schedule": s});
+      }
+      setState(() {
+        isLoadingPayments = false;
+        payments.clear();
+        payments.addAll(billingTemp);
+      });
+    });
   }
 
   ///Another method to refresh the list of products but when the user
@@ -30,6 +97,12 @@ class _PaymentsState extends State<Payments> {
     await Future.delayed(Duration(milliseconds: 1000));
     if (mounted) setState(() {});
     _refreshController.loadComplete();
+  }
+
+  @override
+  void initState() {
+    getUserPayments();
+    super.initState();
   }
 
   @override
@@ -105,9 +178,9 @@ class _PaymentsState extends State<Payments> {
             // color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: cinemas.isEmpty
+          child: payments.isEmpty
               ? Center(
-                  child: const Text("No hay Cines",
+                  child: const Text("Aún no hay pagos",
                       style: TextStyle(
                           fontSize: 15,
                           decoration: TextDecoration.none,
@@ -151,12 +224,12 @@ class _PaymentsState extends State<Payments> {
                         scrollDirection: Axis.vertical,
                         // shrinkWrap: true,
 
-                        itemCount: cinemas.length,
+                        itemCount: payments.length,
                         // itemExtent: 50,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            child: itemListView(cinemas[index]),
+                            child: itemListView(payments[index]),
                           );
                         },
                       ),
@@ -164,4 +237,135 @@ class _PaymentsState extends State<Payments> {
                   )),
         ),
       );
+
+  String getChairs(chairStatus) {
+    var chairs = [];
+    for (var row in chairStatus) {
+      var x = chairStatus.indexOf(row);
+      for (var i = 0; i < row.length; i++) {
+        var y = i;
+        if (row[i] == 4) {
+          chairs.add(widget.alphabet[x].toString() + (y + 1).toString());
+        }
+      }
+    }
+    String text = '';
+    for (var i = 0; i < chairs.length; i++) {
+      text += i != chairs.length - 1 ? "${chairs[i]}, " : chairs[i];
+    }
+    // setState(() {
+    //   quantity = chairs.length;
+    // });
+    return text;
+  }
+
+  Widget itemListView(Map<dynamic, dynamic> payment) {
+    double height = 10;
+    return Container(
+      height: 167,
+      decoration: BoxDecoration(
+        color: '#d9d9d9'.toColor(),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: TextButton(
+          // onPressed: () => {
+          //       AppContext.getInstance().set('cinemaId', cinema.id!),
+          //       Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => Cinema(
+          //           title: cinema.name,
+          //           urlImage: cinema.urlImage!,
+          //         ),
+          //       )),
+          //     },
+          onPressed: () => {},
+          child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Container(
+                // height: 167,
+                decoration: BoxDecoration(
+                  color: '#d9d9d9'.toColor(),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.local_movies,
+                      color: '#4f4f4f'.toColor(),
+                      size: 100,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.48,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(payment['cinema'].name,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              height: height,
+                            ),
+                            Text(payment['film'].name,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              height: height,
+                            ),
+                            Row(
+                              children: [
+                                Text(payment['schedule'].day,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  width: height,
+                                ),
+                                Text(payment['schedule'].hour,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: height,
+                            ),
+                            Text('Sala: ' + payment['schedule'].room,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              height: height,
+                            ),
+                            Text(
+                                'Asientos: ' +
+                                    getChairs(payment['billing'].chairs)
+                                        .toUpperCase(),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ))),
+    );
+  }
 }

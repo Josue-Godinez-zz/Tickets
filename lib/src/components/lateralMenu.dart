@@ -7,6 +7,7 @@ import 'package:venta_de_tickets/src/views/cinemas/cinemas.dart';
 import 'package:venta_de_tickets/src/views/events/event.dart';
 import 'package:venta_de_tickets/src/views/login/login.dart';
 import 'package:venta_de_tickets/src/views/paymentSection/payment.dart';
+import 'package:venta_de_tickets/src/views/payments.dart/payments.dart';
 import 'package:venta_de_tickets/src/views/profile/profile.dart';
 
 // ignore: camel_case_types
@@ -52,6 +53,16 @@ class _lateralMenuState extends State<lateralMenu> {
             ), () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const Profile()));
+        }),
+        item(
+            "Mis compras",
+            Icon(
+              Icons.shopping_cart_outlined,
+              color: Theme.of(context).primaryColor,
+              size: 20,
+            ), () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Payments()));
         }),
         item(
             "Cerrar Sesión",

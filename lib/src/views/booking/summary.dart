@@ -132,7 +132,7 @@ class _SummaryState extends State<Summary> {
                       height: 10,
                     ),
                     Text(
-                      getChairs(),
+                      getChairs().toUpperCase(),
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 18,

@@ -128,6 +128,23 @@ class DBConnection {
     return result;
   }
 
+  static Future<Map<String, dynamic>> getFilmsById(id) async {
+    final result = await _filmsCollection.findOne(where.eq('_id', id));
+    return result;
+  }
+
+  static Future<Map<String, dynamic>> getCinemasById(id) async {
+    final result = await _cinemasCollection.findOne(where.eq('_id', id));
+    return result;
+  }
+
+  static Future<List<Map<String, dynamic>>> getPaymentsByUsers(
+      ObjectId userId) async {
+    final array =
+        await _billingCollection.find(where.eq('user', userId)).toList();
+    return array;
+  }
+
   static String _getConnectionString() {
     return "mongodb+srv://jgodinez:una@cluster0.tajvs.mongodb.net/Dev-Gestion-De-Tickets?retryWrites=true&w=majority";
   }
