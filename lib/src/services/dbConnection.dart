@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:venta_de_tickets/src/models/billingDto.dart';
 import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 
 class DBConnection {
@@ -11,6 +12,7 @@ class DBConnection {
   static var _filmsCollection;
   static var _scheduleCollection;
   static var _bookingCollection;
+  static var _billingCollection;
 
   factory DBConnection() {
     return _instance;
@@ -27,8 +29,8 @@ class DBConnection {
       _cinemasCollection = _db?.collection('Cinemas');
       _filmsCollection = _db?.collection('Peliculas');
       _scheduleCollection = _db?.collection('Schedule');
-      _bookingCollection = _db?.collection('Bookings');
-      _scheduleCollection = _db!.collection('Schedule');
+      // _bookingCollection = _db?.collection('Bookings');
+      _billingCollection = _db!.collection('Billing');
     }
   }
 
@@ -91,19 +93,30 @@ class DBConnection {
     return array;
   }
 
-  /// Return a list of booking of a show
-  static Future<List<Map<String, dynamic>>> getBookingsByShow(
-      ObjectId showId) async {
-    final array =
-        await _bookingCollection.find(where.eq('show', showId)).toList();
-    return array;
-  }
+  // /// Return a list of booking of a show
+  // static Future<List<Map<String, dynamic>>> getBookingsByShow(
+  //     ObjectId showId) async {
+  //   final array =
+  //       await _bookingCollection.find(where.eq('show', showId)).toList();
+  //   return array;
+  // }
 
   // Update the data from the schedule
   static Future<String> saveScheduleData(ScheduleDto scheduleDto) async {
     scheduleDto.id ??= ObjectId();
     try {
       var resultUser = await _scheduleCollection.save(scheduleDto.toJson());
+      return "Datos guardados correctamente";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  // Save the data from the billing
+  static Future<String> saveBillingData(BillingDto billingDto) async {
+    billingDto.id ??= ObjectId();
+    try {
+      var resultUser = await _billingCollection.save(billingDto.toJson());
       return "Datos guardados correctamente";
     } catch (e) {
       return e.toString();

@@ -58,12 +58,12 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    getSeats();
+    // getSeats();
     getChairs();
     initializeAnimation();
     widget.moviePlayerController.setLooping(true);
     widget.reflectionPlayerController.setLooping(true);
-    widget.moviePlayerController.initialize();
+    // widget.moviePlayerController.initialize();
     widget.moviePlayerController.play();
     widget.reflectionPlayerController.play();
   }
@@ -90,25 +90,28 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
         }
       }
     }
+    if (chairs.length > 0) {
+      AppContext.getInstance().set('chairs', chairs);
+    }
     chairs.length > 0 ? setState(() => {isSelectedChairs = true}) : null;
   }
 
-  void getSeats() {
-    isLoadingBookins = true;
-    DBConnection.getBookingsByShow(AppContext.getInstance().get('showId'))
-        .then((value) {
-      List<BookingDto> bookingsTemp = <BookingDto>[];
-      for (var item in value) {
-        bookingsTemp.add(BookingDto.fromJson(item));
-      }
-      setState(() {
-        isLoadingBookins = false;
-        for (var seat in bookingsTemp) {
-          _chairStatus[int.parse(seat.row)][int.parse(seat.column)] = 2;
-        }
-      });
-    });
-  }
+  // void getSeats() {
+  //   isLoadingBookins = true;
+  //   DBConnection.getBookingsByShow(AppContext.getInstance().get('showId'))
+  //       .then((value) {
+  //     List<BookingDto> bookingsTemp = <BookingDto>[];
+  //     for (var item in value) {
+  //       bookingsTemp.add(BookingDto.fromJson(item));
+  //     }
+  //     setState(() {
+  //       isLoadingBookins = false;
+  //       for (var seat in bookingsTemp) {
+  //         _chairStatus[int.parse(seat.row)][int.parse(seat.column)] = 2;
+  //       }
+  //     });
+  //   });
+  // }
 
   void showToast(String msg, {int? duration, int? gravity}) {
     Toast.show(msg,

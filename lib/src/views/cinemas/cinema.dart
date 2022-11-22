@@ -18,7 +18,7 @@ class Cinema extends StatefulWidget {
 }
 
 class _CinemaState extends State<Cinema> {
-  List<FilmDto> cinemas = <FilmDto>[];
+  List<FilmDto> films = <FilmDto>[];
   bool isLoadingCinemas = false;
 
   @override
@@ -37,8 +37,8 @@ class _CinemaState extends State<Cinema> {
       }
       setState(() {
         isLoadingCinemas = false;
-        cinemas.clear();
-        cinemas.addAll(filmsTemp);
+        films.clear();
+        films.addAll(filmsTemp);
       });
     });
   }
@@ -115,28 +115,29 @@ class _CinemaState extends State<Cinema> {
                             onPressed: () {
                               // Navigator.pop(context);
                               AppContext.getInstance()
-                                  .set('movieId', cinemas[index].id!);
+                                  .set('movieId', films[index].id!);
                               AppContext.getInstance()
-                                  .set('movieName', cinemas[index].name);
+                                  .set('movie', films[index]);
                               AppContext.getInstance()
-                                  .set('price', cinemas[index].price);
+                                  .set('movieName', films[index].name);
+                              AppContext.getInstance()
+                                  .set('price', films[index].price);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Movie(
-                                          title: cinemas[index]
-                                              .name, // [TODO] Nombre del cinema
-                                          urlImage: cinemas[index].urlImage!,
-                                          description:
-                                              cinemas[index].description,
-                                          cinema: cinemas[
-                                              index]))); // [TODO] Url imagen del cinema
+                                          title: films[index]
+                                              .name, // [TODO] Nombre del film
+                                          urlImage: films[index].urlImage!,
+                                          description: films[index].description,
+                                          cinema: films[
+                                              index]))); // [TODO] Url imagen del film
                             },
                             child: Column(
                               children: [
-                                cinemas[index].urlImage != ''
+                                films[index].urlImage != ''
                                     ? Image.network(
-                                        cinemas[index].urlImage!,
+                                        films[index].urlImage!,
                                         // fit: BoxFit.cover,
                                         width: 90,
                                       )
@@ -149,7 +150,7 @@ class _CinemaState extends State<Cinema> {
                                   height: 5,
                                 ),
                                 Center(
-                                  child: Text(cinemas[index].name,
+                                  child: Text(films[index].name,
                                       textAlign: TextAlign.center,
                                       // ignore: prefer_const_constructors
                                       style: TextStyle(
@@ -161,7 +162,7 @@ class _CinemaState extends State<Cinema> {
                               ],
                             )))); // [TODO] FORMA DE CADA PELICULA
               },
-              childCount: cinemas.length, // [TODO] TAMANO TOTAL DE LA LISTA
+              childCount: films.length, // [TODO] TAMANO TOTAL DE LA LISTA
             ),
           ),
         ],

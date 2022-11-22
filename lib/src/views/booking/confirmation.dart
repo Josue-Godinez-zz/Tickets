@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:venta_de_tickets/src/models/billingDto.dart';
+import 'package:venta_de_tickets/src/models/filmDto.dart';
 import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/models/userdto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
@@ -49,6 +51,8 @@ class Confirmation extends StatefulWidget {
 
 class _ConfirmationState extends State<Confirmation> {
   ScheduleDto scheduleDto = AppContext.getInstance().get('scheduleDto');
+  FilmDto filmDto = AppContext.getInstance().get('movie');
+  UserDto userDto = AppContext.getInstance().get('user');
   String getChairs() {
     var chairs = [];
     for (var row in widget.chairStatus) {
@@ -79,10 +83,15 @@ class _ConfirmationState extends State<Confirmation> {
   }
 
   void saveData() async {
+    BillingDto billingDto = BillingDto(
+        id: null,
+        filmId: filmDto.id,
+        scheduleId: scheduleDto.id,
+        userId: userDto.userId,
+        chairs: widget.chairStatus);
+    await DBConnection.saveBillingData(billingDto);
     replaceSelection();
-    await DBConnection.saveScheduleData(scheduleDto).then((value) {
-      log(value);
-    });
+    await DBConnection.saveScheduleData(scheduleDto);
   }
 
   @override
