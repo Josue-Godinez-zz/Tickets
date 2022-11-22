@@ -13,32 +13,34 @@ class FilmDto {
   int duration = 0;
   ObjectId? cinemaId;
   String? urlImage = '';
+  String price = '';
 
-  FilmDto({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.duration,
-    required this.cinemaId,
-    required this.urlImage,
-  });
+  FilmDto(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.duration,
+      required this.cinemaId,
+      required this.urlImage,
+      required this.price});
 
   FilmDto.empty() {
     name = '';
     description = '';
     duration = 0;
     urlImage = '';
+    price = '';
   }
 
   ///Convert Json object to FilmDto object
   factory FilmDto.fromJson(Map<String, dynamic> json) => FilmDto(
-        id: json["_id"],
-        name: json['name'],
-        description: (json['description'] != null) ? json['description'] : '',
-        duration: json['duration'],
-        urlImage: (json['image'] != null) ? json['image'] : '',
-        cinemaId: json["cinema"],
-      );
+      id: json["_id"],
+      name: json['name'],
+      description: (json['description'] != null) ? json['description'] : '',
+      duration: json['duration'],
+      urlImage: (json['image'] != null) ? json['image'] : '',
+      cinemaId: json["cinema"],
+      price: json['priceByTicket']);
 
   ///Convert FilmDto object to Json object
   Map<String, dynamic> toJson() => {
@@ -47,7 +49,8 @@ class FilmDto {
         'description': description,
         "duration": duration,
         "image": urlImage,
-        "cinema": cinemaId
+        "cinema": cinemaId,
+        "priceByTicket": price
       };
 
   ///Convert FilmDto object to Json object withot id object
@@ -56,7 +59,8 @@ class FilmDto {
         'description': description,
         "duration": duration,
         "image": urlImage,
-        "cinema": cinemaId
+        "cinema": cinemaId,
+        "priceByTicket": price
       };
 
   @override

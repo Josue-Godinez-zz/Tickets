@@ -122,6 +122,10 @@ class _ScheduleState extends State<Schedule> {
                   onPressed: () {
                     // Navigator.pop(context);
                     AppContext.getInstance().set('showId', shows[index].id!);
+                    AppContext.getInstance().set('filmName', widget.title);
+                    AppContext.getInstance().set('day', shows[index].day);
+                    AppContext.getInstance().set('hour', shows[index].hour);
+                    AppContext.getInstance().set('room', shows[index].room!);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

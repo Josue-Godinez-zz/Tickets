@@ -3,6 +3,7 @@ import 'package:venta_de_tickets/src/models/bookingDto.dart';
 import 'package:venta_de_tickets/src/models/scheduleDto.dart';
 import 'package:venta_de_tickets/src/services/dbConnection.dart';
 import 'package:venta_de_tickets/src/util/AppContext.dart';
+import 'package:venta_de_tickets/src/views/booking/summary.dart';
 import 'package:venta_de_tickets/src/widgets/app_widget.dart';
 import 'package:venta_de_tickets/src/widgets/videoclipper.dart';
 import 'package:venta_de_tickets/src/widgets/videoclipper2.dart';
@@ -275,7 +276,14 @@ class _BookingState extends State<Booking> with TickerProviderStateMixin {
                 color: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Summary(
+                                chairStatus: _chairStatus,
+                              )));
+                },
                 child: SizedBox(
                   width: _size.width - 64,
                   height: _size.height * .08,

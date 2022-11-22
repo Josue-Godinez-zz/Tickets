@@ -93,8 +93,6 @@ class _Movie extends State<Movie> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(scheduleList.length.toString(),
-                        style: Theme.of(context).textTheme.headline6),
                     // ignore: prefer_const_constructors
                     Padding(
                         padding: const EdgeInsets.all(3),
