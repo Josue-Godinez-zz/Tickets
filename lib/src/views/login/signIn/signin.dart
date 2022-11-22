@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:venta_de_tickets/src/components/background.dart';
 import 'package:venta_de_tickets/src/components/customLoading.dart';
+import 'package:venta_de_tickets/src/util/AppContext.dart';
 import 'package:venta_de_tickets/src/views/landing/landing.dart';
 import 'package:venta_de_tickets/src/views/login/loginController.dart';
 import 'package:venta_de_tickets/src/views/login/signUp/signUp.dart';
@@ -112,6 +113,8 @@ class _SignInState extends State<SignIn> {
                           if (value['status'] as bool) {
                             SmartDialog.dismiss();
                             // Navigator.pop(context);
+                            AppContext.getInstance()
+                                .set('user', LoginController.getUserDto()!);
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

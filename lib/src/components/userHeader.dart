@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:venta_de_tickets/src/models/userdto.dart';
+import 'package:venta_de_tickets/src/util/AppContext.dart';
+import 'package:venta_de_tickets/src/views/landing/landing.dart';
 import '../util/extentions.dart';
 
 class UserHeader extends StatefulWidget {
@@ -11,8 +14,19 @@ class UserHeader extends StatefulWidget {
 }
 
 class _UserHeaderState extends State<UserHeader> {
-  final image = null;
+  var image = "";
   bool isImage = false;
+  UserDto userDto = AppContext.getInstance().get('user');
+
+  @override
+  void initState() {
+    super.initState();
+    isImage = userDto.photo != null && userDto.photo != '';
+    if (isImage) {
+      image = userDto.photo!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,12 +36,23 @@ class _UserHeaderState extends State<UserHeader> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Center(child: addImage()),
-            Text(
-              'User Name',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+            TextButton(
+              onPressed: () => {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Landing(
+                        user: UserDto(null, "", "", "", "", "", 0),
+                      ),
+                    ))
+              },
+              child: Text(
+                userDto.name!,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             )
           ],
@@ -42,34 +67,29 @@ class _UserHeaderState extends State<UserHeader> {
           Row(
             children: [
               Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: image == null
-                      ? Center(
-                          child: !isImage
-                              ? Icon(
-                                  Icons.person,
-                                  color: '#ffffff'.toColor(),
-                                  size: 40,
-                                )
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  // child: base64ToImage(businessA.image),
-                                ),
-                        )
-                      : null
-                  // ClipRRect(
-                  //     borderRadius: BorderRadius.circular(100),
-                  //     child: Image.file(
-                  //       File(image!.path!),
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  ),
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: image == ''
+                    ? Center(
+                        child: !isImage
+                            ? Icon(
+                                Icons.person,
+                                color: '#ffffff'.toColor(),
+                                size: 40,
+                              )
+                            : null)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+              ),
               SizedBox(
                 width: 10,
                 height: 0,

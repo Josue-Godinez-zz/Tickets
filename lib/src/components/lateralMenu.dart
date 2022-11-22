@@ -44,18 +44,6 @@ class _lateralMenuState extends State<lateralMenu> {
               context, MaterialPageRoute(builder: (context) => Cinemas()));
         }),
         item(
-            "Eventos",
-            Icon(
-              Icons.calendar_today,
-              color: Theme.of(context).primaryColor,
-              size: 20,
-            ), () {
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => const Event()));
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Payment()));
-        }),
-        item(
             "Mi cuenta",
             Icon(
               Icons.account_circle_rounded,
