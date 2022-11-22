@@ -133,6 +133,7 @@ class DBConnection {
     return result;
   }
 
+//
   static Future<Map<String, dynamic>> getCinemasById(id) async {
     final result = await _cinemasCollection.findOne(where.eq('_id', id));
     return result;
@@ -142,6 +143,13 @@ class DBConnection {
       ObjectId userId) async {
     final array =
         await _billingCollection.find(where.eq('user', userId)).toList();
+    return array;
+  }
+
+  static Future<List<Map<String, dynamic>>> getTopCinemas() async {
+    final array = await _cinemasCollection
+        .find(where.sortBy('numberOfWeekSales', descending: true).limit(10))
+        .toList();
     return array;
   }
 
